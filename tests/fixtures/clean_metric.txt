@@ -1,0 +1,16 @@
+AQUILA-1 PAYLOAD USER'S GUIDE (excerpt)
+
+Stage 1
+Dry mass: 22,000 kg
+Propellant mass: 410,000 kg
+Specific impulse: 282 s (sea level), 311 s (vacuum)
+Thrust: 7,600 kN (sea level), 8,200 kN (vacuum)
+
+Stage 2
+Dry mass: 4,000 kg
+Propellant mass: 110,000 kg
+Specific impulse: 348 s (vacuum)
+Thrust: 930 kN (vacuum)
+
+Performance
+Maximum payload to LEO (200 km, 28.5 deg): 18,000 kg

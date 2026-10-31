@@ -1,0 +1,9 @@
+openai
+pydantic
+pytest
+scipy
+numpy
+matplotlib
+pdfplumber
+python-dotenv
+requests

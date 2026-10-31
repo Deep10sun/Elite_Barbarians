@@ -1,0 +1,459 @@
+Falcon Rockets and Engines
+Falcon 1, Falcon 9 and Falcon Heavy
+Jim Rauf
+OLLI Fall 2023 1
+1 Introduction: topics , some basics and rocket pioneers
+2 SpaceX founding , Musk’s vision, facilities, organization, personnel
+3 SpaceX and NASA commercial funding
+4 Falcon rockets and engines , Falcon 1, Falcon 9 and Falcon Heavy
+5 Dragon spacecraft , Cargo Dragon and Crew Dragon
+6 Super Heavy booster and engines and Starship spacecraft
+7 Starship competition for Artemis Moon Human Landing System
+8 Musk’s Mars vision , plans , challenges and SpaceX summary
+OLLI Fall 2023 2
+Falcon 1
+• Falcon 1 was SpaceX’s first launch vehicle
+• It stood 68 feet tall and 5.5 feet in diameter
+• It was propelled into low Earth orbit (LEO) by a single
+Merlin IC engine
+• Payload capacity up to ~1,010 pounds
+• Falcon 1 was designed to minimize price per launch for
+low-Earth-orbit satellites, increase reliability, and
+optimize flight environment and time to launch
+• It also was used to verify components and structural
+design concepts that would be used in the Falcon 9
+• SpaceX idea was to begin with the smallest useful
+orbital rocket , the Falcon 1
+• It required less money, etc versus a larger more complex
+rocket system
+• It was financed by SpaceX
+• “Crawl before you run”
+OLLI Fall 2023 3
+Falcon 1
+• The first stage was made from friction-stir-welded 2219
+aluminum alloy (aluminum –copper family)
+• Used a common bulkhead between the LOX and RP-1
+tanks, as well as flight pressure stabilization
+• Transported safely without pressurization but gains
+additional strength when pressurized for flight
+• The parachute system, built by Irvin Parachute Corporation, uses a high-speed drogue chute and a main
+chute
+• The first two launches, the Falcon 1 used a Merlin 1A
+engine
+• An improved to create the Merlin 1C was first flown on
+the third Falcon 1 flight, and on the first 5 flights of the
+Falcon 9
+• The Falcon 1 first stage was powered by a single pumpfed Merlin 1C engine burning RP-1 and liquid oxygen
+providing 92,000 lbf of sea-level thrust and a specific
+impulse of 245 s (vacuum Isp 290 )
+• The first stage burns for around 169 seconds
+OLLI Fall 2023 4
+Falcon 1
+• The second stage tanks were built with a cryogeniccompatible 2014 aluminum alloy
+• With the plan to move to aluminum-lithium alloy on
+the Falcon 1e
+• The helium pressurization system pumps propellant to
+the engine, supplies heated pressurized gas for the
+attitude control thrusters, and is used for zero-g
+propellant accumulation prior to engine restart
+• The Kestrel engine includes a titanium heat exchanger to
+pass waste heat to the helium, thereby greatly extending
+its work capacity
+• The pressure tanks are composite overwrapped pressure
+vessels made by Arde corporation with Inconel alloy and
+are the same as those used in the Delta III.
+[22]
+• The second stage was powered by a pressure-fed Kestrel
+engine with 7,000 lbf of vacuum thrust and a vacuum
+specific impulse of 330 sec
+OLLI Fall 2023 5
+Falcon 1
+OLLI Fall 2023 6
+Flight No
+Date /
+time
+(UTC)
+Launch site Payload Payload mass Orbit Customers Launch
+outcome
+1
+24
+March
+2006,
+22:30
+Omelek Island FalconSAT-2 19.5 kg LEO (Planned) DARPA Failure
+Engine failure at T+33 seconds. Loss of vehicle FalconSAT-2 landed in a storage shed near the launch site
+2
+21
+March
+2007,
+01:10
+Omelek Island DemoSat LEO (Planned) DARPA Failure
+Successful first-stage burn and transition to second stage, maximal altitude 289 km. Harmonic oscillation at T+5 minutes.
+Premature engine shutdown at T+7 min 30 s. Failed to reach orbit
+3
+3 August
+2008,
+03:34
+Omelek Island
+Trailblazer
+PRESat
+Nanosail-D
+Explorers
+4 kg LEO (Planned)
+ORS
+NASA
+NASA
+Celestis[42]
+Failure
+Residual stage-1 thrust led to collision between stage 1 and stage 2
+4
+28
+Septemb
+er 2008,
+23:15
+Omelek Island RatSat 165 kg LEO SpaceX Success
+Initially scheduled for 23–25 Sep, carried dummy payload – mass simulator, 165 kg (originally intended to be RazakSAT.
+5
+14 July
+2009,
+03:35
+Omelek Island RazakSAT 180 kg LEO ATSB Success
+Falcon 1 July 14,2009 Launch Success
+Falcon 1 Launch Attempts
+OLLI Fall 2023 7
+Liquid Propellants
+• Liquid oxygen LOX
+• Oxidizer
+• -297F
+• Liquid hydrogen LH2
+• Fuel
+• -423 F
+• Methane CH4
+• Fuel
+• -258 F
+• RP-1 Kerosene CnH2n+1OH
+• Fuel
+• Room temperature
+• Alcohol CH3−CH2−CH2−OH
+• Fuel
+• Room temperature
+• Liquid propellant rockets are more “efficient” than solid
+propellant rockets
+• They have higher specific impulse values
+OLLI Fall 2023 8
+ V e m/s Isp
+Space Shuttle Solid Rocket Booster 2,500 250
+Liquid oxygen-liquid hydrogen 4,400 450
+Liquid oxygen- liquid methane 3,333 363
+First Engine Kestrel
+• Kestrel was an LOX/RP-1 pressure-fed rocket engine
+• It was developed in the 2000s for upper stage use
+on the Falcon 1 rocket
+• It used the same pintle architecture as the Merlin
+engine but does not have a turbopump and is fed
+only by tank pressure
+• It was ablatively cooled in the chamber and throat
+and radiatively cooled in the nozzle, which was
+fabricated from a high strength niobium alloy
+• Thrust vector control is provided by electromechanical actuators on the engine dome for pitch
+and yaw
+• Roll control (and attitude control during coast
+phases) is provided by helium cold gas thrusters
+• A TEA-TEB pyrophoric ignition system is used to
+provide multiple restart capability on the upper
+stage
+Kestrel Engine
+• First flight 2006
+• Last flight 2009
+• Designer Tom Mueller
+• Liquid-fuel engine
+• Propellant LOX / RP-1
+• Cycle Pressure fed
+• Thrust, vacuum 6,300 lb
+• Thrust-to-weight ratio 65:1
+• Chamber pressure 135 psi
+• Specific impulse 317 seconds
+• Dry weight 115 lb
+OLLI Fall 2023 9
+Merlin engines
+• Merlin rocket engines powering falcon rockets were
+developed for recovery and reuse
+• The engines are gimbaled and have throttle and restart
+capability https://www.grc.nasa.gov/WWW/k12/rocket/Images/pitch.gif
+• They utilize cooled rocket-grade kerosene (RP-1) and chilled
+liquid oxygen in a gas-generator power cycle
+• A Turbopump feeds the propellant, heated helium
+pressurizes the fuel tank
+• Dual redundant TEA-TEB pyrophoric igniters provide restart
+reliability.
+• The Merlin 1D (M1D) for sea-level has 854 kilonewtons
+thrust
+• The Merlin 1D Vac (MVac) for vacuum has 981 kilonewtons
+thrust
+• Merlins have thrust-to-weight ratio of approximately 200:1
+• The Merlin 1D has increased fatigue life, improved nozzle and
+combustion chamber thermal margins counts
+• It is also easier to manufacture by decreasing the parts count
+and labor hours
+• Each Merlin engine is assigned one processing unit
+employing three computers - a triple redundant design
+• The engines use an open-cycle or gas-generator power
+cycle
+• A gas-generator cycle burns some of the propellant to
+generate exhaust driving a turbine that power the RP-1
+and LOX pumps, then expelled to the atmosphere or
+vacuum
+• Propellants are supplied by a single-shaft, dual-impeller
+turbopump spinning at 36,000 RPM, and produces
+10,000 horsepower
+• The turbopump supplies the hydraulic actuators with
+high-pressure fluid eliminating the need for a separate
+hydraulic drive system
+• M1D engines have a smaller exhaust section and 16:1
+expansion nozzle primarily for ascent from Earth
+• MVac engine has a larger expansion nozzle of 165:1 to
+maximize efficiency in the vacuum
+• The expansion nozzle is by radiative cooling
+OLLI Fall 2023 10
+Merlin engines
+• Nine Merlin 1D engines were fitted to the Falcon 9 first
+stage and one to it second stage
+• They engines are produced at a rate of eight per month
+with plans to increase the production to 400 per year
+OLLI Fall 2023 11
+Merlin Engine Pintle Propellant Injection
+OLLI Fall 2023 12
+Pintle Injector Cold flow Testing for
+SpaceX's Raptor engine.
+F-1 Engine Propellant Injector
+Falcon 9
+• Falcon 9 is a two-stage launch vehicle powered by liquid
+oxygen (LOX) and rocket-grade kerosene (RP-1)
+• Its payload can be either a satellite enclosed in a fairing
+or a SpaceX Dragon spacecraft
+• Falcon 9 has been updated several times
+• Its current version is the Full Thrust Block 5
+configuration which first flew in spring 2018
+• Falcon 9 Block 5 architecture focused on improving
+performance, reliability, and life of the vehicle, as well as
+ensuring the vehicle’s ability to meet critical government
+crewed and non-crewed mission requirements
+• Engine performance, additional thrust, on both stages
+was increased
+• Thermal protection shielding was modified to support
+rapid recovery and refurbishment
+• Avionics designs, thrust structures, and other
+components were upgraded for commonality, reliability,
+and performance
+Falcon 9 Block 5
+OLLI Fall 2023 13
+Falcon 9
+• First stage thrust is 1.71 million pounds at liftoff
+• Nine Merlin sea level engines
+• Second stage thrust is 210,000 pounds
+• One Merlin vacuum engine
+• The Falcon 9 is designed to fly up to ten times without
+refurbishing and up to 100 times with periodic
+refurbishing
+• The Falcon 9 payload capability is:
+• 50,265-pounds to Low-Earth Orbit (LEO)
+• 18,300-pounds to Geosynchronous Transfer Orbit
+(GTO)
+• 8,860-pounds on a Mars trajectory
+OLLI Fall 2023 14
+Falcon 9 Engine Mounts Octaweb
+• The metal Octaweb structure that
+houses the Merlin engines is vital to the
+Falcon 9’s first stage
+• Earlier versions of the rocket had nine
+engines arranged in three rows of three
+• With the Octaweb, eight engines are
+clustered in a circle around a central
+one
+• The Octaweb reduces the length and
+weight of the Falcon 9 thrust structure,
+simplifying the rocket’s design and
+assembly
+• Streamlining the manufacturing process
+ultimately keeps launch costs down
+OLLI Fall 2023 15
+Falcon 9 Specs
+OLLI Fall 2023 16
+OLLI Fall 2023 17
+Falcon 9 Landing Legs
+Leg structure
+OLLI Fall 2023 18
+Falcon 9 Grid Fins Second Stage and Landing
+https://www.youtube.com/watch?v=Aq7rDQx9jns
+OLLI Fall 2023 19
+Falcon 9 Horizontal Integration Facility
+• SpaceX doesn’t build the Falcon 9 in Florida, it’s just
+assembled there
+• Most of the rocket’s parts are built in the
+company’s factory in Hawthorne, California
+• The Falcon 9 components, including fuselages and
+engines, are shipped by truck to various test stands
+before eventually ending up at NASA’s Kennedy
+Space Center in Florida
+• In Florida, the pieces are mated in SpaceX’s
+Horizontal Integration Facility, a large hangar
+within sight of launchpad 39A
+OLLI Fall 2023 20
+Falcon 9 First Stage Landing
+• The most exciting part of any Falcon 9 launch might be
+the landing, specifically that of the first stage onto a
+floating barge
+• The Falcon 9’s first stage includes four small carbon-fiber
+landing legs stowed flat against its fuselage
+• After the rocket goes through staging, the first stage
+begins its fall through the atmosphere
+• Cold gas thrusters near the top flip the rocket around so
+it’s upright
+• Then the stage engine fires briefly, just enough to slow its
+fall
+• As the stage approached its target, the legs deploy
+• In the very final phases of its descent, three of the nine
+Merlin engines fire one last time for what SpaceX calls
+the ‘boostback burn’
+• The stage slows even further, almost hovering as it makes
+a soft touchdown
+• This landing sequence entirely automated, with the
+rocket stage responding to real-time data
+OLLI Fall 2023 21
+Falcon 9 Post-flight
+• After its successful landing, the Falcon 9’s first stage is
+returned to the Horizontal Integration Facility where it
+can be checked out, refurbished, and readied for another
+launch
+• Reusing the stage is much cheaper than building a new
+one for every launch
+• The SES-10 mission in March 2017 was the first time a
+core stage of an orbit-capable rocket has been reused,
+and the cost was “substantially less than half” of what it
+would have cost to build a brand new stage
+OLLI Fall 2023 22
+Falcon 9 Turn Around Time
+• Rapid rocket reusability is key to lowering launch costs
+and turbocharging space exploration
+• In the last year alone, SpaceX reduced rocket reuse time
+from 27 to 21 days, as shown below
+• If the cost were to correlate with time, which seems
+likely, that suggests that the cost to refurbish the first
+stage of the Falcon 9 rocket has dropped from ~$13 to
+~$1 million during the past five years
+• This improvement, along with other reusability
+developments, suggests the cost-per-kilogram to LEO of a
+reused Falcon 9 is ~$800, compared to ~$2,700 for a new
+Falcon 9
+• It cost between $450 million and $1.5 billion per launch
+to refurbish the Space Shuttle
+• Launches 261
+• Landings 219
+• Reflights 194
+OLLI Fall 2023 23
+Falcon 9
+OLLI Fall 2023 24
+Falcon 9
+OLLI Fall 2023 25
+Falcon 9
+OLLI Fall 2023 26
+Falcon Heavy
+• Falcon Heavy is a partially reusable super heavy-lift
+launch vehicle that can carry cargo into Earth orbit,
+and beyond
+• The rocket consists of a center core on which two
+Falcon 9 boosters are attached, and a second stage on
+top of the center core
+• Falcon Heavy has the second highest payload capacity
+of any currently operational launch vehicle behind
+NASA's Space Launch System (SLS)
+• Falcon Heavy's maiden launch on 6 February 6, 2018,
+• As a dummy payload, the rocket carried a Tesla
+Roadster belonging to Elon Musk, with a mannequin
+dubbed "Starman" in the driver's seat
+• The second Falcon Heavy launch occurred on April
+11, 2019
+• All three booster rockets successfully returned to
+Earth
+• The third Falcon Heavy launch successfully occurred
+on June 25, 2019
+• Since then, Falcon Heavy has been certified for the
+National Security Space Launch (NSSL) program
+• Falcon Heavy is not human rated by NASA
+• SpaceX intends to have the Starship/Super Heavy
+vehicles human rated
+OLLI Fall 2023 27
+Falcon Heavy
+• First Stage
+• Three cores make up the first stage of Falcon Heavy
+• The side cores, or boosters, are connected on the
+nosecone, the interstage, and on the octaweb
+• Shortly after liftoff the center core engines are throttled
+down
+• After the side cores separate, the center core engines
+throttle back up to full thrust
+• Falcon Heavy’s first stage incorporates 27 Merlin engines
+across three aluminum-lithium alloy rocket cores
+containing liquid oxygen and rocket-grade kerosene (RP1) propellant
+• Falcon Heavy generates more than 5 million pounds of
+thrust at liftoff
+• NUMBER OF ENGINES 27
+• THRUST AT SEA LEVEL 5,130,000 lbf
+• THRUST IN VACUUM 5,548,500 lbf
+HEIGHT 229.6 ft
+WIDTH 39.9 ft
+MASS 3,125,735 lb
+PAYLOAD TO LEO 140,660 lb
+PAYLOAD TO GTO 58,860 lb
+PAYLOAD TO MARS 37,040 lb
+OLLI Fall 2023 28
+Falcon Heavy
+• Interstage
+• The interstage is a composite structure that connects the
+center core on the first stage and second stages and holds
+the release and separation system.
+• Grid fins
+• Falcon Heavy is equipped with 12 hypersonic grid fins
+• Four on each booster, positioned at the base of the
+interstage or nosecone which orients by moving the
+center of pressure during reentry
+OLLI Fall 2023 29
+Falcon Heavy
+• Second Stage
+• Falcon Heavy draws upon Falcon 9’s proven design,
+which minimizes stage separation events and maximizes
+reliability
+• The second-stage Merlin Vacuum Engine delivers the
+rocket’s payload to orbit after the main engines cut off
+and the two first-stage cores separate.
+• NUMBER OF ENGINES 1
+• BURN TIME 397 sec
+• THRUST 220,500 lbf
+• Payload Fairing
+• Made of a carbon composite material, the fairing protects
+satellites on their way to orbit
+• SpaceX is recovering fairings for reuse on future missions.
+• HEIGHT 43 ft
+• DIAMETER 17.1 ft
+• Falcon Heavy
+• Launches 7
+• Landings 13
+• Reflights 10
+OLLI Fall 2023 30
+Falcon Heavy Assembly at Launch Site
+OLLI Fall 2023 31
+OLLI Fall 2023 32
+Twenty-seven Merlin engines firing during launch of Arabsat-6A in 2019
+Falcon Heavy Liftoff and Landing
+Falcon Heavy Flight Profile
+OLLI Fall 2023 33
+https://www.youtube.com/watch?v=4Ca6x4QbpoM
+1 Introduction: topics , some basics and rocket pioneers
+2 SpaceX founding , Musk’s vision, facilities, organization, personnel
+3 SpaceX and NASA commercial funding
+4 Falcon rockets and engines , Falcon 1, Falcon 9 and Falcon Heavy
+5 Dragon spacecraft , Cargo Dragon and Crew Dragon
+6 Super Heavy booster and engines and Starship spacecraft
+7 Starship competition for Artemis Moon Human Landing System
+8 Musk’s Mars vision , plans , challenges and SpaceX summary
+OLLI Fall 2023 34
