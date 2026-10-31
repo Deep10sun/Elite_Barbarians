@@ -36,4 +36,5 @@ class MissionRequest(BaseModel):
 class Mission(BaseModel):
     request: MissionRequest
     rocket: RocketSpec
+    missing_fields: list[str] = Field(default_factory=list)
     blocking_issues: list[str] = Field(default_factory=list)

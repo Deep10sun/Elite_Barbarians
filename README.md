@@ -147,3 +147,18 @@ or you can add a specific request:
 ```bash
 python src/run_mission.py "Can the Falcon1 Rocket get to the moon with a 1000kg payload?"
 ```
+
+## Gradio demo
+
+To show the first step in a browser, install the dependencies and start the
+Gradio wrapper:
+
+```bash
+python -m pip install -r requirements.txt
+python src/gradio_app.py
+```
+
+Open the local URL printed by Gradio. Enter a mission request, upload
+`rockets/falcon.txt` (or paste a specification), and click **Run first step**.
+The parsed input and output are displayed in the browser so the page can be
+captured as an image for a demo or report.
