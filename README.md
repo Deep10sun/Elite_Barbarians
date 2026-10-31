@@ -71,7 +71,7 @@ demo.ipynb        Interactive demonstration notebook
 Install the dependencies from the project directory:
 
 ```bash
-python3 -m pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Configuration
@@ -133,23 +133,6 @@ an LLM without tools and a fixed rule-based calculator.
 Physics calculations must be validated by simulators and deterministic tools
 so the model cannot claim success using unsupported arithmetic or fall into a
 self-confirming reasoning loop.
-
-## Resources and timeline
-
-The project uses Python, SciPy, and an LLM, with public rocket specifications
-from manufacturer user guides. The scope is intentionally incremental:
-
-- **Nov 1:** ascent simulator and transfer tools working on one rocket
-- **Nov 16:** agent loop handling LEO and Moon missions end to end
-- **Nov 23:** evaluation complete; ISS and Mars as stretch goals
-
-## Current limitations
-
-- The application currently performs extraction and validation only.
-- It does not simulate launches, calculate delta-v, evaluate feasibility, or
-  generate trajectory visualizations.
-- Model output must be valid JSON matching the expected schema.
-- The default command uses the example request and the bundled rocket file.
 
 ## Run
 
