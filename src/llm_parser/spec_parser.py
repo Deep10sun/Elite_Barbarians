@@ -1,5 +1,9 @@
-from llm import call_model, extract_json
-from schema import RocketSpec
+if __package__.startswith("src."):
+  from ..llm_utils.llm import call_model, extract_json
+  from ..llm_utils.schema import RocketSpec
+else:
+  from llm_utils.llm import call_model, extract_json
+  from llm_utils.schema import RocketSpec
 
 PROMPT = """You extract rocket specifications from document text into JSON.
 Rules:

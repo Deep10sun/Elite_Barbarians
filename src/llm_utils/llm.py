@@ -81,7 +81,11 @@ def extract_json(text):
     if starts:
         text = text[min(starts):]
     try:
-        value, _ = json.JSONDecoder().raw_decode(text)
+        # Some model responses contain literal newlines or tabs inside quoted
+        # source text. Accept those control characters while still requiring
+        # valid JSON structure and validating the result against Pydantic
+        # schemas at the call site.
+        value, _ = json.JSONDecoder(strict=False).raw_decode(text)
         return value
     except ValueError as e:
         raise ValueError(f"no parseable JSON ({e}); starts with {text[:60]!r}")

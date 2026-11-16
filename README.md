@@ -93,7 +93,7 @@ Values not present in the document remain `null`; the parser does not fill gaps
 from outside knowledge. Payload capacity belongs to the published reference
 section and is not used as a stage property.
 
-The included sample document is [rockets/falcon.txt](rockets/falcon.txt).
+The included sample document is [rockets/falcon.txt](rockets/falcon9.txt).
 The current parser reads the specification as document text and produces a
 validated structured object. The planned agent interface will support a JSON
 rocket specification directly.
