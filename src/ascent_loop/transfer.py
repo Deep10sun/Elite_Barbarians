@@ -16,6 +16,7 @@ R_EARTH = 6_378_137.0
 AU = 149_597_870_700.0
 MOON_DISTANCE = 384_400_000.0
 MARS_DISTANCE = 1.523679 * AU
+TRANSFER_RESERVE_FRACTION = 0.05
 
 
 @dataclass(frozen=True)
@@ -105,8 +106,9 @@ def propagate_orbit(semi_major_axis_m: float, eccentricity: float,
 
     for time_s in times_s:
         mean_anomaly = initial_mean + n * time_s
-        eccentric_anomaly = mean_anomaly
-        for _ in range(20):
+        eccentric_anomaly = math.pi if eccentricity > 0.8 else mean_anomaly
+        converged = False
+        for _ in range(50):
             correction = (
                 eccentric_anomaly
                 - eccentricity * math.sin(eccentric_anomaly)
@@ -114,7 +116,12 @@ def propagate_orbit(semi_major_axis_m: float, eccentricity: float,
             ) / (1.0 - eccentricity * math.cos(eccentric_anomaly))
             eccentric_anomaly -= correction
             if abs(correction) < 1e-12:
+                converged = True
                 break
+        if not converged:
+            raise RuntimeError(
+                f"eccentric anomaly solver did not converge at t={time_s}"
+            )
 
         true_anomaly = 2.0 * math.atan2(
             math.sqrt(1.0 + eccentricity) * math.sin(eccentric_anomaly / 2.0),
@@ -145,13 +152,19 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
     parking_radius = R_EARTH + parking_altitude_km * 1000.0
 
     if destination in {"LEO", "ISS"}:
+        assumptions = "payload is already in the circular parking orbit"
+        if destination == "ISS":
+            assumptions += (
+                "; ISS altitude and 51.6-degree inclination/plane change are "
+                "not modeled"
+            )
         return {
             "destination": destination,
             "status": "ok",
             "dv_total_ms": 0.0,
             "time_s": 0.0,
             "burns": [],
-            "assumptions": "payload is already in the circular parking orbit",
+            "assumptions": assumptions,
         }
 
     if destination == "GTO":
@@ -160,10 +173,13 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
         return {
             "destination": destination,
             "status": "ok",
-            "dv_total_ms": transfer["dv_total_ms"],
+            "dv_total_ms": transfer["dv1_ms"],
             "time_s": transfer["time_s"],
-            "burns": transfer,
-            "assumptions": "coplanar Hohmann transfer from circular LEO to GEO radius",
+            "burns": [{"name": "GTO injection", "dv_ms": transfer["dv1_ms"]}],
+            "assumptions": (
+                "coplanar Hohmann transfer from circular LEO to the GTO "
+                "apogee radius; circularization at GEO is not modeled"
+            ),
         }
 
     if destination in {"TLI", "Moon"}:
@@ -175,25 +191,26 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
             "status": "ok",
             "dv_total_ms": lunar_transfer["dv1_ms"],
             "time_s": lunar_transfer["time_s"],
-            "burns": {"trans_lunar_injection": lunar_transfer["dv1_ms"]},
+            "burns": [
+                {"name": "trans-lunar injection", "dv_ms": lunar_transfer["dv1_ms"]}
+            ],
             "arrival_speed_ms": vis_viva_speed(
                 MOON_DISTANCE,
                 lunar_transfer["transfer_semi_major_axis_m"],
                 MU_EARTH,
             ),
             "assumptions": (
-                "Earth-centered patched-conic estimate; TLI excludes lunar "
-                "orbit insertion"
+                "Hohmann-to-lunar-distance estimate using Earth gravity only; "
+                "TLI excludes lunar orbit insertion"
             ),
         }
         if destination == "Moon":
-            result["burns"]["lunar_orbit_insertion"] = 0.0
             result["assumptions"] += "; lunar capture is not modeled"
         return result
 
     if destination == "Mars":
         earth_departure = hohmann_transfer(AU, MARS_DISTANCE, MU_SUN)
-        mars_arrival = earth_departure["dv2_ms"]
+        mars_arrival_excess = earth_departure["dv2_ms"]
         earth_orbit_speed = circular_speed(AU, MU_SUN)
         departure_excess = abs(
             vis_viva_speed(AU, earth_departure["transfer_semi_major_axis_m"], MU_SUN)
@@ -205,15 +222,15 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
         return {
             "destination": destination,
             "status": "ok",
-            "dv_total_ms": round(earth_escape + mars_arrival, 3),
+            "dv_total_ms": round(earth_escape, 3),
             "time_s": earth_departure["time_s"],
-            "burns": {
-                "earth_escape_ms": round(earth_escape, 3),
-                "mars_arrival_ms": mars_arrival,
-            },
+            "burns": [
+                {"name": "Earth departure", "dv_ms": round(earth_escape, 3)}
+            ],
+            "mars_arrival_excess_ms": mars_arrival_excess,
             "assumptions": (
-                "patched-conic Earth-to-Mars Hohmann estimate; no launch losses, "
-                "plane changes, aerobraking, or Mars capture burn"
+                "heliocentric Earth-to-Mars Hohmann estimate; burns include "
+                "Earth departure only; Mars capture is not modeled"
             ),
         }
 
@@ -221,4 +238,57 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
         "destination": destination,
         "status": "unsupported",
         "message": f"no transfer model for destination {destination!r}",
+    }
+
+
+def check_margin(ascent: dict, transfer: dict, payload_kg: float,
+                 stage2_dry_mass_kg: float, stage2_propellant_mass_kg: float,
+                 stage2_isp_s: float,
+                 reserve_fraction: float = TRANSFER_RESERVE_FRACTION) -> dict:
+    """Compare ascent margin with the reserved transfer delta-v requirement."""
+    if reserve_fraction < 0:
+        raise ValueError("reserve_fraction cannot be negative")
+    transfer_dv = transfer.get("dv_total_ms")
+    ascent_margin = ascent.get("margin_ms")
+    if transfer_dv is None or ascent_margin is None:
+        return {
+            "status": "error",
+            "message": "ascent and transfer results must include delta-v values",
+        }
+
+    reserved_transfer_dv = transfer_dv * (1.0 + reserve_fraction)
+    margin_ms = ascent_margin - reserved_transfer_dv
+    required_dv = reserved_transfer_dv
+    margin_pct = None if required_dv == 0 else margin_ms / required_dv * 100.0
+    propellant_needed = 0.0
+    if margin_ms < 0:
+        if stage2_isp_s <= 0:
+            return {
+                "status": "error",
+                "message": "stage2_isp_s must be positive for propellant conversion",
+            }
+        shortfall_ms = -margin_ms
+        mass_before = payload_kg + stage2_dry_mass_kg + stage2_propellant_mass_kg
+        exhaust_velocity = stage2_isp_s * 9.80665
+        propellant_needed = mass_before * (
+            1.0 - math.exp(-shortfall_ms / exhaust_velocity)
+        )
+
+    return {
+        "status": "ok",
+        "feasible": bool(
+            ascent.get("reached_orbit")
+            and transfer.get("feasible", transfer.get("status") == "ok")
+            and margin_ms >= 0
+        ),
+        "margin_ms": round(margin_ms, 1),
+        "margin_pct": None if margin_pct is None else round(margin_pct, 2),
+        "reserve_fraction": reserve_fraction,
+        "transfer_dv_ms": round(transfer_dv, 1),
+        "reserved_transfer_dv_ms": round(reserved_transfer_dv, 1),
+        "propellant_needed_kg": round(propellant_needed, 1),
+        "assumptions": (
+            "transfer reserve is a fixed fraction; propellant equivalent uses "
+            "the inverse rocket equation and stage 2 Isp"
+        ),
     }

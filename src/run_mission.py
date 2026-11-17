@@ -3,69 +3,37 @@ import json
 import sys
 
 if __package__:
+    from .ascent_loop.agent import run_agent
     from .llm_parser.parser import MissingFieldsError, build_mission
-    from .ascent_loop.physics import (
-        build_rocket,
-        find_max_payload,
-        simulate_ascent,
-        validate_rocket,
-    )
-    from .ascent_loop.transfer import calculate_transfer
 else:
+    from ascent_loop.agent import run_agent
     from llm_parser.parser import MissingFieldsError, build_mission
-    from ascent_loop.physics import (
-        build_rocket,
-        find_max_payload,
-        simulate_ascent,
-        validate_rocket,
-    )
-    from ascent_loop.transfer import calculate_transfer
 
 
-def run_ascent(mission) -> dict:
-    """Run deterministic ascent physics using the parsed mission values."""
-    rocket_spec = {
-        "name": mission.rocket.name,
-        "stages": [
-            {
-                "dry_mass_kg": stage.dry_mass_kg.value,
-                "propellant_mass_kg": stage.propellant_mass_kg.value,
-                "isp_vac_s": stage.isp_vac_s.value,
-                "isp_sl_s": stage.isp_sl_s.value,
-                "thrust_sl_n": stage.thrust_sl_n.value,
-            }
-            for stage in mission.rocket.stages
-        ],
-    }
-
-    validation = validate_rocket(rocket_spec)
-    if validation["status"] != "ok":
-        return {"status": "error", "validation": validation}
-
-    rocket = build_rocket(rocket_spec)
-    ascent = simulate_ascent(
-        rocket,
-        payload_kg=mission.request.payload_kg,
-    )
-    ascent["max_payload"] = find_max_payload(rocket)
-    return {"status": "ok", **ascent}
-
-request = sys.argv[1] if len(sys.argv) > 1 else \
+DEFAULT_REQUEST = (
     "Can the Falcon rocket put a 5,000 kg payload on a trans-lunar trajectory?"
-spec_path = sys.argv[2] if len(sys.argv) > 2 else "rockets/falcon9.txt"
-if len(sys.argv) <= 2:
-    spec_path = Path(__file__).resolve().parents[1] / spec_path
+)
 
-try:
-    mission = build_mission(
-        request,
-        Path(spec_path).read_text(encoding="utf-8"),
+
+def main(argv: list[str] | None = None) -> int:
+    args = argv if argv is not None else sys.argv[1:]
+    request = args[0] if args else DEFAULT_REQUEST
+    spec_path = Path(args[1]) if len(args) > 1 else (
+        Path(__file__).resolve().parents[1] / "rockets" / "falcon9.txt"
     )
-except MissingFieldsError as error:
-    print(json.dumps(error.as_response(), indent=2))
-    raise SystemExit(1)
+    iterations = int(args[2]) if len(args) > 2 else 5
 
-output = json.loads(mission.model_dump_json())
-output["ascent"] = run_ascent(mission)
-output["transfer"] = calculate_transfer(mission.request.destination)
-print(json.dumps(output, indent=2))
+    try:
+        mission = build_mission(request, spec_path.read_text(encoding="utf-8"))
+    except MissingFieldsError as error:
+        print(json.dumps(error.as_response(), indent=2))
+        return 1
+
+    output = json.loads(mission.model_dump_json())
+    output["agent"] = run_agent(mission, iterations=iterations)
+    print(json.dumps(output, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

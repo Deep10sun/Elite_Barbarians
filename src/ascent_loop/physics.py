@@ -38,6 +38,8 @@ def validate_rocket(spec: dict) -> dict:
     {"name": ..., "stages": [{"dry_mass_kg": 22200, ...}, ...]}
     """
     missing, bad = [], []
+    if not spec.get("stages"):
+        return {"status": "needs_input", "missing": ["stages"]}
     for i, st in enumerate(spec.get("stages", []), start=1):
         for f in REQUIRED:
             if st.get(f) is None:
@@ -119,14 +121,25 @@ def simulate_ascent(rocket: Rocket, payload_kg: float,
 
 
 def find_max_payload(rocket: Rocket, hi_kg: float = 100_000.0,
-                     tol_kg: float = 1.0, **kw) -> dict:
-    """Bisection on payload: largest payload that still reaches orbit."""
-    if not simulate_ascent(rocket, 0.0, **kw)["reached_orbit"]:
+                     tol_kg: float = 1.0,
+                     required_extra_dv_ms: float = 0.0, **kw) -> dict:
+    """Bisection on payload: largest payload meeting the supplied delta-v budget."""
+    if required_extra_dv_ms < 0:
+        raise ValueError("required_extra_dv_ms cannot be negative")
+
+    def qualifies(payload_kg: float) -> bool:
+        result = simulate_ascent(rocket, payload_kg, **kw)
+        return bool(
+            result["reached_orbit"]
+            and result["margin_ms"] >= required_extra_dv_ms
+        )
+
+    if not qualifies(0.0):
         return {"max_payload_kg": 0.0, "note": "cannot reach orbit even empty"}
     lo = 0.0
     while hi_kg - lo > tol_kg:
         mid = 0.5 * (lo + hi_kg)
-        if simulate_ascent(rocket, mid, **kw)["reached_orbit"]:
+        if qualifies(mid):
             lo = mid
         else:
             hi_kg = mid

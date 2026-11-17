@@ -40,10 +40,13 @@ The current pipeline:
 3. Converts source values to kilograms, seconds, and newtons while retaining
    original units and exact source quotes.
 4. Reports missing physics inputs and ambiguities.
+5. Evaluates ascent, transfer, and margin results for a candidate vehicle.
+6. Lets the LLM propose revisions through the bounded `revise.py` gate.
 
-The current prototype does **not** yet simulate ascent, calculate orbital
-transfers, propagate trajectories, evaluate feasibility, generate plots, or
-recommend mission changes. Those capabilities are planned next.
+The LLM never calculates physics or edits a vehicle directly.
+`validate_rocket`, `simulate_ascent`, `calculate_transfer`, `check_margin`, and
+`find_max_payload` produce the numbers; `apply_revision` rejects changes that
+are unknown, out of range, repeated, or over the propellant cap.
 
 ## Project layout
 
@@ -145,7 +148,14 @@ python src/run_mission.py
 or you can add a specific request:
 
 ```bash
-python src/run_mission.py "Can the Falcon1 Rocket get to the moon with a 1000kg payload?"
+python src/run_mission.py "Can the Falcon rocket put a 5,000 kg payload on a trans-lunar trajectory?"
+```
+
+An optional second argument selects the rocket specification and a third
+argument sets the maximum number of agent iterations:
+
+```bash
+python src/run_mission.py "<request>" rockets/falcon9.txt 5
 ```
 
 ## Gradio demo
