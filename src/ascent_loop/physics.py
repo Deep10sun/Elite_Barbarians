@@ -105,7 +105,7 @@ def simulate_ascent(rocket: Rocket, payload_kg: float,
 
     dv_needed = v_target_ms + losses_ms
     twr = liftoff_twr(rocket, payload_kg)
-    lifts_off = True if twr is None else twr > 1.0
+lifts_off = False if twr is None else twr > 1.0
     return {
         "payload_kg": payload_kg,
         "reached_orbit": bool(lifts_off and dv_total >= dv_needed),
