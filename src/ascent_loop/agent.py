@@ -294,10 +294,10 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
     ceiling = max_payload.get("max_payload_kg") if max_payload else None
     shortfall = None if ceiling is None else max(0.0, requested_payload - ceiling)
     facts = {
-        "verdict": (
-            "feasible" if initial_result["margin"].get("feasible")
-            else "infeasible"
-        ),
+"verdict": (
+    "feasible" if final["margin"].get("feasible")
+    else "infeasible"
+),
         "initial_verdict": (
             "feasible" if initial_result["margin"].get("feasible")
             else "infeasible"
