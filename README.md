@@ -110,6 +110,11 @@ The command prints an indented JSON `Mission` object containing:
 - `missing_fields`: inputs still required by downstream physics tools
 - `ambiguities`: unclear or conflicting information from the request or source
 
+Payload masses in mission requests are converted deterministically to kilograms.
+Supported mass units include kg, g, mg, tonnes/metric tons, pounds/lb, ounces,
+and short or long tons. The original matched text is retained in
+`payload_source_quote`.
+
 ## Planned capabilities
 
 - Ascent simulation and orbit-reached checks

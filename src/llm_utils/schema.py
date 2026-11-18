@@ -27,8 +27,10 @@ class RocketSpec(BaseModel):
 
 class MissionRequest(BaseModel):
     payload_kg: Optional[float] = None
+    payload_source_quote: Optional[str] = None
     destination: Literal["LEO", "ISS", "GTO", "TLI", "Moon", "Mars", "unknown"] = "unknown"
     vehicle_name: Optional[str] = None
+    target_altitude_km: Optional[float] = None
     missing_fields: list[str] = Field(default_factory=list)
     ambiguities: list[str] = Field(default_factory=list)
 

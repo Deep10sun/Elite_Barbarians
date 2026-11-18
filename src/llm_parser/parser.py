@@ -1,9 +1,11 @@
 if __package__.startswith("src."):
     from ..llm_utils.llm import call_model, extract_json
     from ..llm_utils.schema import MissionRequest, Mission, RocketSpec
+    from ..llm_utils.units import parse_payload_mass
 else:
     from llm_utils.llm import call_model, extract_json
     from llm_utils.schema import MissionRequest, Mission, RocketSpec
+    from llm_utils.units import parse_payload_mass
 from .spec_parser import parse_spec
 
 
@@ -51,7 +53,13 @@ Respond with ONLY a JSON object, no markdown, no commentary:
 def parse_request(request_text: str, nonce=None) -> MissionRequest:
     raw = call_model(request_text, system=REQUEST_PROMPT, nonce=nonce)
     try:
-        return MissionRequest.model_validate(extract_json(raw))
+        req = MissionRequest.model_validate(extract_json(raw))
+        parsed_payload = parse_payload_mass(request_text)
+        if parsed_payload is not None:
+            payload_kg, _unit, quote = parsed_payload
+            req.payload_kg = payload_kg
+            req.payload_source_quote = quote
+        return req
     except Exception:
         print("Could not parse request output:\n", raw[:2000])
         raise
