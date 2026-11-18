@@ -3,18 +3,20 @@ from pathlib import Path
 
 import gradio as gr
 
-from parser import build_mission
+if __package__:
+    from .llm_parser.parser import MissingFieldsError, build_mission
+else:
+    from llm_parser.parser import MissingFieldsError, build_mission
 
 
-DEFAULT_REQUEST = "Can this rocket put a 5,000 kg payload on a trans-lunar trajectory?"
-DEFAULT_SPEC_PATH = Path(__file__).resolve().parents[1] / "rockets" / "falcon.txt"
+DEFAULT_REQUEST = "Can the Falcon rocket put a 5,000 kg payload on a trans-lunar trajectory?"
+DEFAULT_SPEC_PATH = Path(__file__).resolve().parents[1] / "rockets" / "falcon9.txt"
 
 
 def run_first_step(
     request_text: str,
     spec_file: str | None,
     spec_text: str,
-    vehicle_hint: str,
 ) -> dict:
     if not request_text.strip():
         raise gr.Error("Enter a mission request.")
@@ -27,11 +29,11 @@ def run_first_step(
     else:
         raise gr.Error("Upload a rocket specification or paste its text.")
 
-    mission = build_mission(
-        request_text.strip(),
-        document,
-        vehicle_hint=vehicle_hint.strip(),
-    )
+    try:
+        mission = build_mission(request_text.strip(), document)
+    except MissingFieldsError as error:
+        return error.as_response()
+
     return json.loads(mission.model_dump_json())
 
 
@@ -50,7 +52,6 @@ def create_demo() -> gr.Blocks:
                     value=DEFAULT_REQUEST,
                     lines=3,
                 )
-                vehicle = gr.Textbox(label="Vehicle hint", value="Falcon")
                 spec_file = gr.File(
                     label="Rocket specification (.txt)",
                     file_types=[".txt"],
@@ -68,7 +69,7 @@ def create_demo() -> gr.Blocks:
 
         run.click(
             fn=run_first_step,
-            inputs=[request, spec_file, spec_text, vehicle],
+            inputs=[request, spec_file, spec_text],
             outputs=output,
         )
 
