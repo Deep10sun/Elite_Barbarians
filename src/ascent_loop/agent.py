@@ -59,7 +59,7 @@ Strategy, in this order:
 The propellant_needed_kg value is only an optimistic estimate. Do not propose a
 change that exceeds revision_limits, and do not alter a rejected proposal.
 payload_ceiling applies to the current vehicle: if you change propellant after
-it was computed, it is stale and must be requested again.
+it was computed, it is stale and must be requested again.w
 """
 
 
@@ -122,6 +122,72 @@ def _revision_limits(candidate: Candidate) -> dict:
     }
 
 
+def derive_verdict(requested_kg: float, history: list[dict]) -> tuple[str, str]:
+    """Derive verdict outcomes solely from saved candidate evaluations."""
+    closed = [
+        event for event in history
+        if event.get("event") in {"evaluation", "evaluation_cached"}
+        and event.get("candidate")
+        and event.get("margin", {}).get("feasible")
+    ]
+    as_requested_closed = any(
+        abs(float(event["candidate"]["payload_kg"]) - requested_kg) < 1e-6
+        for event in closed
+    )
+    revised_closed = any(
+        float(event["candidate"]["payload_kg"]) < requested_kg - 1e-6
+        for event in closed
+    )
+    if as_requested_closed:
+        return "feasible", "feasible"
+    if revised_closed:
+        return "infeasible_as_requested", "infeasible"
+    return "infeasible", "infeasible"
+
+
+def _deterministic_explanation(facts: dict) -> str:
+    requested = facts["requested_kg"]
+    ceiling = facts["ceiling_kg"]
+    verdict = facts["verdict"]
+    if verdict == "feasible":
+        changes = facts.get("recommended_changes")
+        additions = changes.get("added_propellant_kg") if changes else None
+        text = f"Feasible as requested: {requested:g} kg closes"
+        populated_additions = [value for value in (additions or []) if value]
+        if populated_additions:
+            text += " with " + " and ".join(
+                f"+{value:g} kg stage {i} propellant"
+                for i, value in enumerate(additions or [], 1)
+                if value
+            )
+        return text + "."
+    if verdict == "infeasible_as_requested":
+        text = (
+            f"Not feasible as requested: {requested:g} kg exceeds the ceiling "
+            f"of {ceiling:g} kg"
+        )
+        if facts["shortfall_kg"] is not None:
+            text += f" by {facts['shortfall_kg']:g} kg"
+        if facts["shortfall_pct"] is not None:
+            text += f" ({facts['shortfall_pct']:.1f}%)"
+        text += "."
+        changes = facts["recommended_changes"] or {}
+        payload = changes.get("payload_kg")
+        additions = changes.get("added_propellant_kg")
+        if payload is not None:
+            text += f" Feasible at {payload:g} kg"
+            if additions:
+                text += " with " + " and ".join(
+                    f"+{value:g} kg stage {i} propellant"
+                    for i, value in enumerate(additions, 1)
+                    if value
+                )
+            text += "."
+        return text
+    ceiling_text = f"The ceiling is {ceiling:g} kg." if ceiling is not None else "No payload ceiling was found."
+    return f"Infeasible: {ceiling_text} Nothing closes, even at near-zero payload."
+
+
 def _decision(raw: str) -> dict:
     try:
         value = extract_json(raw)
@@ -158,7 +224,7 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
     turn = 0
     decisions_made = 0
     rejections_in_a_row = 0
-    termination_reason = "iteration_cap"
+    termination_reason = "iteration_limit"
     initial_candidate = _candidate_view(candidate)
     initial_result = None
     parking_altitude_km = (
@@ -198,7 +264,10 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
             turn += 1
 
         if result["margin"].get("feasible"):
-            termination_reason = "feasible"
+            if abs(candidate.payload_kg - mission.request.payload_kg) < 1e-6:
+                termination_reason = "feasible_as_requested"
+            else:
+                termination_reason = "feasible_after_revision"
             break
 
         prompt = json.dumps(
@@ -225,7 +294,7 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
 
         if action == "finish":
             decisions_made += 1
-            termination_reason = "finish"
+            termination_reason = "infeasible_no_solution"
             break
         if action == "find_max_payload":
             max_payload = find_max_payload(
@@ -236,6 +305,7 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
                 "turn": turn,
                 "iteration": iteration,
                 "event": "find_max_payload",
+                "candidate": _candidate_view(candidate),
                 "result": max_payload,
             })
             turn += 1
@@ -293,7 +363,7 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
         })
         turn += 1
     current_candidate = _candidate_view(candidate)
-    if max_payload is None and not final["margin"].get("feasible"):
+    if max_payload is None:
         max_payload = find_max_payload(
             candidate.build(),
             required_extra_dv_ms=final["margin"]["reserved_transfer_dv_ms"],
@@ -302,55 +372,124 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
             "turn": turn,
             "iteration": decisions_made,
             "event": "find_max_payload",
+            "candidate": _candidate_view(candidate),
             "result": max_payload,
         })
         turn += 1
     requested_payload = mission.request.payload_kg
     if initial_result is None:
         initial_result = final
+
+    first_evaluation = next(
+        (event for event in history if event.get("event") == "evaluation"),
+        None,
+    )
+    as_requested_evaluation = first_evaluation
+    closed_candidates = [
+        event for event in history
+        if event.get("event") in {"evaluation", "evaluation_cached"}
+        and event.get("margin", {}).get("feasible")
+    ]
+    # Cached entries do not carry the margin; include only evaluated closing events.
+    closed_candidates = [
+        event for event in closed_candidates
+        if event.get("candidate") is not None
+    ]
+    as_requested_closed = any(
+        abs(float(event["candidate"]["payload_kg"]) - requested_payload) < 1e-6
+        for event in closed_candidates
+    )
+    revised_closed = any(
+        float(event["candidate"]["payload_kg"]) < requested_payload - 1e-6
+        or any(float(value) > 0 for value in event["candidate"].get("added_propellant_kg", []))
+        for event in closed_candidates
+    )
+
+    verdict, verdict_as_requested = derive_verdict(requested_payload, history)
+
     ceiling = max_payload.get("max_payload_kg") if max_payload else None
+    if ceiling is None:
+        for event in reversed(history):
+            if event.get("event") == "find_max_payload" and isinstance(event.get("result"), dict):
+                ceiling = event["result"].get("max_payload_kg")
+                if ceiling is not None:
+                    break
+
+    required_extra_dv = final["margin"].get("reserved_transfer_dv_ms", 0.0)
+    stock_max = find_max_payload(
+        candidate.base,
+        required_extra_dv_ms=required_extra_dv,
+    )
+    ceiling_stock = stock_max.get("max_payload_kg")
+    history.append({
+        "turn": turn,
+        "iteration": decisions_made,
+        "event": "find_max_payload_stock",
+        "candidate": {"payload_kg": 0.0, "added_propellant_kg": [0.0] * len(candidate.base.stages)},
+        "result": stock_max,
+    })
+    turn += 1
+
     shortfall = None if ceiling is None else max(0.0, requested_payload - ceiling)
+    shortfall_pct = (
+        None if not requested_payload or shortfall is None
+        else round(100.0 * shortfall / requested_payload, 1)
+    )
+
+    closing_event = next(
+        (
+            event for event in reversed(closed_candidates)
+        ),
+        None,
+    )
+    recommended = None
+    if closing_event is not None:
+        closing_candidate = closing_event["candidate"]
+        recommended = {
+            "payload_kg": closing_candidate["payload_kg"],
+            "added_propellant_kg": closing_candidate.get("added_propellant_kg", []),
+        }
+    elif ceiling is not None:
+        recommended = {
+            "payload_kg": ceiling,
+            "added_propellant_kg": list(candidate.added_prop_kg),
+        }
+
     facts = {
-"verdict": (
-    "feasible" if final["margin"].get("feasible")
-    else "infeasible"
-),
+        "verdict": verdict,
+        "verdict_as_requested": verdict_as_requested,
         "initial_verdict": (
-            "feasible" if initial_result["margin"].get("feasible")
-            else "infeasible"
+            "feasible" if initial_result["margin"].get("feasible") else "infeasible"
         ),
         "final_verdict": (
             "feasible" if final["margin"].get("feasible") else "infeasible"
         ),
         "requested_kg": requested_payload,
         "ceiling_kg": ceiling,
+        "ceiling_kg_stock": ceiling_stock,
         "shortfall_kg": shortfall,
-        "shortfall_pct": (
-            None if not requested_payload or shortfall is None
-            else round(100.0 * shortfall / requested_payload, 1)
-        ),
+        "shortfall_pct": shortfall_pct,
+        "recommended_changes": recommended,
         "final_margin_ms": final["margin"].get("margin_ms"),
         "initial_margin_ms": initial_result["margin"].get("margin_ms"),
     }
-    explanation = (
-        f"Deterministic checks report {facts['verdict']} for the "
-        f"{requested_payload:g} kg requested payload. "
-    )
-    if ceiling is not None:
-        explanation += (
-            f"The transfer-aware maximum payload is {ceiling:g} kg, "
-            f"leaving a shortfall of {shortfall:g} kg "
-            f"({facts['shortfall_pct']:.1f}%)."
-        )
+    explanation = _deterministic_explanation(facts)
+
+    if verdict == "feasible":
+        termination_reason = "feasible_as_requested"
+    elif verdict == "infeasible_as_requested":
+        termination_reason = "feasible_after_revision"
+    elif rejections_in_a_row >= 3:
+        termination_reason = "iteration_limit"
+    elif decisions_made >= iterations:
+        termination_reason = "iteration_limit"
     else:
-        explanation += (
-            f"The final deterministic margin is {facts['final_margin_ms']} m/s."
-        )
-    if rejections_in_a_row >= 3:
-        termination_reason = "rejection_limit"
+        termination_reason = "infeasible_no_solution"
     report = {
         "status": "ok",
         "verdict": facts["verdict"],
+        "requested_payload_kg": requested_payload,
+        "as_requested_evaluation": as_requested_evaluation,
         "initial_candidate": initial_candidate,
         "candidate": current_candidate,
         **final,

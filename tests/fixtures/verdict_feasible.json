@@ -1,0 +1,7 @@
+{
+  "request": {"payload_kg": 10000, "destination": "LEO"},
+  "history": [
+    {"event": "evaluation", "candidate": {"payload_kg": 10000, "added_propellant_kg": [0, 0]}, "margin": {"feasible": true, "margin_ms": 120}}
+  ],
+  "facts": {"verdict": "feasible", "requested_kg": 10000, "ceiling_kg": 15000, "ceiling_kg_stock": 15000, "shortfall_kg": 0, "shortfall_pct": 0.0}
+}
