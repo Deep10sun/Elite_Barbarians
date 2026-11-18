@@ -50,10 +50,12 @@ def apply_revision(cand: Candidate, change: dict, history: set) -> dict:
       {"add_propellant_kg": 5000, "stage": 2}
     `history` is the set of candidate keys already evaluated.
     """
-    allowed = {"payload_kg", "add_propellant_kg", "stage"}
+allowed = {"payload_kg", "add_propellant_kg", "stage"}
     unknown = set(change) - allowed
     if unknown:
         return {"status": "rejected", "reason": f"unknown fields: {sorted(unknown)}"}
+    if "payload_kg" in change and "add_propellant_kg" in change:
+        return {"status": "rejected", "reason": "only one revision type is allowed per turn"}
 
     new = cand
     if "payload_kg" in change:
