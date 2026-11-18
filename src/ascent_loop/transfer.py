@@ -160,6 +160,7 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
             )
         return {
             "destination": destination,
+            "parking_altitude_km": parking_altitude_km,
             "status": "ok",
             "dv_total_ms": 0.0,
             "time_s": 0.0,
@@ -172,6 +173,7 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
         transfer = hohmann_transfer(parking_radius, geo_radius)
         return {
             "destination": destination,
+            "parking_altitude_km": parking_altitude_km,
             "status": "ok",
             "dv_total_ms": transfer["dv1_ms"],
             "time_s": transfer["time_s"],
@@ -188,6 +190,7 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
         )
         result = {
             "destination": destination,
+            "parking_altitude_km": parking_altitude_km,
             "status": "ok",
             "dv_total_ms": lunar_transfer["dv1_ms"],
             "time_s": lunar_transfer["time_s"],
@@ -221,6 +224,7 @@ def calculate_transfer(destination: str, parking_altitude_km: float = 200.0) -> 
         ) - circular_speed(parking_radius)
         return {
             "destination": destination,
+            "parking_altitude_km": parking_altitude_km,
             "status": "ok",
             "dv_total_ms": round(earth_escape, 3),
             "time_s": earth_departure["time_s"],

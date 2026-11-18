@@ -79,11 +79,15 @@ def _rocket_spec(mission: Any) -> dict:
     }
 
 
-def evaluate_candidate(candidate: Candidate, destination: str) -> dict:
+def evaluate_candidate(
+    candidate: Candidate,
+    destination: str,
+    parking_altitude_km: float = 200.0,
+) -> dict:
     """Run all deterministic mission checks for one candidate."""
     rocket = candidate.build()
     ascent = simulate_ascent(rocket, candidate.payload_kg)
-    transfer = calculate_transfer(destination)
+    transfer = calculate_transfer(destination, parking_altitude_km)
     transfer["feasible"] = bool(
         ascent.get("reached_orbit") and transfer.get("status") == "ok"
     )
@@ -157,13 +161,22 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
     termination_reason = "iteration_cap"
     initial_candidate = _candidate_view(candidate)
     initial_result = None
+    parking_altitude_km = (
+        mission.request.target_altitude_km
+        if mission.request.target_altitude_km is not None
+        else 200.0
+    )
 
     while decisions_made < iterations and rejections_in_a_row < 3:
         iteration = decisions_made
         key = candidate.key()
         result = evaluations.get(key)
         if result is None:
-            result = evaluate_candidate(candidate, mission.request.destination)
+            result = evaluate_candidate(
+                candidate,
+                mission.request.destination,
+                parking_altitude_km,
+            )
             evaluations[key] = result
             if initial_result is None:
                 initial_result = result
@@ -265,7 +278,11 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
 
     final = evaluations.get(candidate.key())
     if final is None:
-        final = evaluate_candidate(candidate, mission.request.destination)
+        final = evaluate_candidate(
+            candidate,
+            mission.request.destination,
+            parking_altitude_km,
+        )
         evaluations[candidate.key()] = final
         history.append({
             "turn": turn,
