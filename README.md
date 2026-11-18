@@ -28,6 +28,12 @@ Mission request + rocket specification
   -> report with verdict, plots, burn table, margins, and recommendation
 ```
 
+Saved mission results can be rendered without contacting the LLM gateway:
+
+```bash
+python -m src.report result.json --out reports/example/ --no-llm
+```
+
 ## Current implementation
 
 The project currently implements the first part of this workflow: extracting

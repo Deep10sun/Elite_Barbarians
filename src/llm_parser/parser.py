@@ -1,3 +1,5 @@
+import re
+
 if __package__.startswith("src."):
     from ..llm_utils.llm import call_model, extract_json
     from ..llm_utils.schema import MissionRequest, Mission, RocketSpec
@@ -7,6 +9,27 @@ else:
     from llm_utils.schema import MissionRequest, Mission, RocketSpec
     from llm_utils.units import parse_payload_mass
 from .spec_parser import parse_spec
+
+
+def _payload_is_derived(request_text: str, ambiguities: list[str]) -> bool:
+    arithmetic = bool(re.search(
+        r"\b(?:people|person|passengers?|crew|units?|items?)\b[^.!?]*"
+        r"(?:[x×]|\beach\b)[^.!?]*",
+        request_text,
+        re.IGNORECASE,
+    ))
+    if not arithmetic:
+        arithmetic = bool(re.search(
+            r"(?<!\d)\d+(?:[.,]\d+)*\s*[x×]\s*"
+            r"\d+(?:[.,]\d+)*\s*(?:kg|kilograms?|tonnes?|tons?|lbs?|pounds?)",
+            request_text,
+            re.IGNORECASE,
+        ))
+    payload_ambiguity = any(
+        "payload" in note.lower() or "mass" in note.lower()
+        for note in ambiguities
+    )
+    return arithmetic or payload_ambiguity
 
 
 class MissingFieldsError(Exception):
@@ -59,6 +82,7 @@ def parse_request(request_text: str, nonce=None) -> MissionRequest:
             payload_kg, _unit, quote = parsed_payload
             req.payload_kg = payload_kg
             req.payload_source_quote = quote
+        req.payload_derived = _payload_is_derived(request_text, req.ambiguities)
         return req
     except Exception:
         print("Could not parse request output:\n", raw[:2000])

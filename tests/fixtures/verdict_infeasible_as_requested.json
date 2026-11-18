@@ -1,0 +1,10 @@
+{
+  "request": {"payload_kg": 200000, "destination": "TLI"},
+  "history": [
+    {"event": "evaluation", "candidate": {"payload_kg": 200000, "added_propellant_kg": [0, 0]}, "margin": {"feasible": false, "margin_ms": -8972}},
+    {"event": "evaluation", "candidate": {"payload_kg": 5624, "added_propellant_kg": [59355, 13900.5]}, "margin": {"feasible": true, "margin_ms": 0.1}},
+    {"event": "find_max_payload", "candidate": {"payload_kg": 5624, "added_propellant_kg": [59355, 13900.5]}, "result": {"max_payload_kg": 5624}},
+    {"event": "find_max_payload_stock", "candidate": {"payload_kg": 0, "added_propellant_kg": [0, 0]}, "result": {"max_payload_kg": 5000}}
+  ],
+  "facts": {"verdict": "infeasible_as_requested", "requested_kg": 200000, "ceiling_kg": 5624, "ceiling_kg_stock": 5000, "shortfall_kg": 194376, "shortfall_pct": 97.2, "recommended_changes": {"payload_kg": 5624, "added_propellant_kg": [59355, 13900.5]}}
+}

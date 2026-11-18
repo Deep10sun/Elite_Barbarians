@@ -100,6 +100,33 @@ def parse_payload_mass(request_text: str) -> Optional[tuple[float, str, str]]:
 
     count = 1.0
     quote = match.group("quote").strip()
+    people_match = re.search(
+        rf"(?P<count>{_NUMBER})\s*(?:people|person|passengers?|crew|units?|items?)"
+        rf"\s*[x×]\s*(?P<mass>{_NUMBER})\s*(?P<mass_unit>{_UNIT})",
+        request_text,
+        re.IGNORECASE,
+    )
+    if people_match:
+        count = parse_number(people_match.group("count"))
+        quote = people_match.group(0).strip()
+    else:
+        count_match = re.search(
+            rf"(?P<count>{_NUMBER})\s*[x×]\s*(?P<mass>{_NUMBER})\s*(?P<mass_unit>{_UNIT})",
+            request_text,
+            re.IGNORECASE,
+        )
+        if count_match:
+            count = parse_number(count_match.group("count"))
+            quote = count_match.group(0).strip()
+        else:
+            reverse_match = re.search(
+                rf"(?P<mass>{_NUMBER})\s*(?P<mass_unit>{_UNIT})\s*[x×]\s*(?P<count>{_NUMBER})",
+                request_text,
+                re.IGNORECASE,
+            )
+            if reverse_match:
+                count = parse_number(reverse_match.group("count"))
+                quote = reverse_match.group(0).strip()
 
     each_match = re.search(r"\beach\b", request_text, re.IGNORECASE)
     if each_match and each_match.start() < match.start():
