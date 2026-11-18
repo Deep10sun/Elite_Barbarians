@@ -44,8 +44,24 @@ def validate_rocket(spec: dict) -> dict:
         for f in REQUIRED:
             if st.get(f) is None:
                 missing.append(f"stage{i}.{f}")
-        if st.get("dry_mass_kg") and st.get("propellant_mass_kg"):
-            if st["propellant_mass_kg"] <= st["dry_mass_kg"]:
+        dry_mass = st.get("dry_mass_kg")
+        propellant_mass = st.get("propellant_mass_kg")
+        for field_name, mass in (
+            ("dry_mass_kg", dry_mass),
+            ("propellant_mass_kg", propellant_mass),
+        ):
+            if mass is not None:
+                try:
+                    valid_mass = math.isfinite(mass) and mass > 0
+                except (TypeError, ValueError):
+                    valid_mass = False
+                if not valid_mass:
+                    bad.append(f"stage{i}: {field_name}={mass} must be finite and positive")
+        if (isinstance(dry_mass, (int, float))
+                and isinstance(propellant_mass, (int, float))
+                and math.isfinite(dry_mass)
+                and math.isfinite(propellant_mass)
+                and propellant_mass <= dry_mass):
                 bad.append(f"stage{i}: propellant mass not above dry mass")
         isp = st.get("isp_vac_s")
         if isp is not None and not (200 <= isp <= 460):
@@ -105,7 +121,7 @@ def simulate_ascent(rocket: Rocket, payload_kg: float,
 
     dv_needed = v_target_ms + losses_ms
     twr = liftoff_twr(rocket, payload_kg)
-lifts_off = False if twr is None else twr > 1.0
+    lifts_off = False if twr is None else twr > 1.0
     return {
         "payload_kg": payload_kg,
         "reached_orbit": bool(lifts_off and dv_total >= dv_needed),
