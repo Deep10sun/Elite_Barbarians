@@ -203,7 +203,9 @@ def _decision(raw: str) -> dict:
     return value
 
 
-def run_agent(mission: Any, iterations: int = 5) -> dict:
+def run_agent(
+    mission: Any, iterations: int = 5, *, request_nonce: str | None = None
+) -> dict:
     """Coordinate up to ``iterations`` model decisions for a parsed mission."""
     if iterations < 1:
         raise ValueError("iterations must be at least 1")
@@ -280,7 +282,9 @@ def run_agent(mission: Any, iterations: int = 5) -> dict:
             indent=2,
         )
         response = _decision(call_model(
-            prompt, system=AGENT_PROMPT, nonce=f"agent-turn-{turn}"
+            prompt,
+            system=AGENT_PROMPT,
+            nonce=f"{request_nonce or 'agent'}-turn-{turn}",
         ))
         history.append({
             "turn": turn,
