@@ -41,3 +41,9 @@ class Mission(BaseModel):
     rocket: RocketSpec
     missing_fields: list[str] = Field(default_factory=list)
     blocking_issues: list[str] = Field(default_factory=list)
+    
+class MissionResult(BaseModel):
+    verdict: Literal["feasible", "infeasible", "missing_data"]
+    payload_ceiling_kg: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    shortfall_kg: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    missing_fields: list[str] = Field(default_factory=list)

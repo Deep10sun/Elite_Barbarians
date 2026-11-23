@@ -1,0 +1,307 @@
+[
+  {
+    "id": "falcon9_leo_feasible",
+    "mission": {
+      "request": {
+        "payload_kg": 500.0,
+        "payload_source_quote": "500 kg",
+        "payload_derived": false,
+        "destination": "LEO",
+        "vehicle_name": "Falcon 9",
+        "target_altitude_km": null,
+        "missing_fields": [],
+        "ambiguities": []
+      },
+      "rocket": {
+        "name": "Falcon 9",
+        "variant": null,
+        "stages": [
+          {
+            "dry_mass_kg": {
+              "value": 25600.0,
+              "unit_as_written": "kg",
+              "source_quote": "Empty mass\t25,600 kg / 56,423 lb"
+            },
+            "propellant_mass_kg": {
+              "value": 395700.0,
+              "unit_as_written": "kg",
+              "source_quote": "Propellant mass\t395,700 kg/ 872,369 lb"
+            },
+            "isp_vac_s": {
+              "value": 312.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (vacuum sec)\t312 sec."
+            },
+            "isp_sl_s": {
+              "value": 283.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (sea-level)\t283 sec."
+            },
+            "thrust_vac_n": {
+              "value": 8227000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust in vacuum\t8,227 kN / 1,849,500 lbf"
+            },
+            "thrust_sl_n": {
+              "value": 7607000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust at sea Level\t7,607 kN / 1,710,000 lbf"
+            }
+          },
+          {
+            "dry_mass_kg": {
+              "value": 3900.0,
+              "unit_as_written": "kg",
+              "source_quote": "Empty mass\t3,900 kg / 8,598 lb"
+            },
+            "propellant_mass_kg": {
+              "value": 92670.0,
+              "unit_as_written": "kg",
+              "source_quote": "Propellant mass\t92,670 kg / 204,302 lb"
+            },
+            "isp_vac_s": {
+              "value": 348.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (vacuum)\t348 sec"
+            },
+            "isp_sl_s": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            },
+            "thrust_vac_n": {
+              "value": 981000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust\t981 kN / 220,500 lbf"
+            },
+            "thrust_sl_n": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            }
+          }
+        ],
+        "published_reference": {},
+        "ambiguities": [
+          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was named in the user message. The 'Specifications' section tables (first stage, second stage) appear to correspond to the current Block 5 variant based on context, but the document does not explicitly label those tables as Block 5.",
+          "The second-stage thrust is listed simply as 'Thrust' with no sea-level or vacuum qualifier in the section header, but it is described as a '1 vacuum' Merlin engine and the Isp is labeled 'Specific Impulse (vacuum)', so this thrust value is treated as vacuum thrust.",
+          "The second-stage Isp is labeled only 'Specific Impulse (vacuum)'; no sea-level Isp is provided for the second stage, as expected for a vacuum-optimized engine.",
+          "LEO payload capacity of 22,800 kg is listed for Full Thrust Block 3/4 and '\u2265 22,800 kg (expendable)' for Block 5; the value used here is from the Block 5 column as the most current active variant.",
+          "The document states 'Every Merlin engine produces 854 kN (192,000 lbf) of thrust' without specifying sea-level or vacuum context, so this per-engine figure was not used in the extraction."
+        ]
+      },
+      "missing_fields": [],
+      "blocking_issues": []
+    },
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    }
+  },
+  {
+    "id": "falcon9_leo_infeasible",
+    "mission": {
+      "request": {
+        "payload_kg": 100000.0,
+        "payload_source_quote": "100,000 kg",
+        "payload_derived": false,
+        "destination": "LEO",
+        "vehicle_name": "Falcon 9",
+        "target_altitude_km": null,
+        "missing_fields": [],
+        "ambiguities": []
+      },
+      "rocket": {
+        "name": "Falcon 9",
+        "variant": null,
+        "stages": [
+          {
+            "dry_mass_kg": {
+              "value": 25600.0,
+              "unit_as_written": "kg",
+              "source_quote": "Empty mass\t25,600 kg / 56,423 lb"
+            },
+            "propellant_mass_kg": {
+              "value": 395700.0,
+              "unit_as_written": "kg",
+              "source_quote": "Propellant mass\t395,700 kg/ 872,369 lb"
+            },
+            "isp_vac_s": {
+              "value": 312.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (vacuum sec)\t312 sec."
+            },
+            "isp_sl_s": {
+              "value": 283.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (sea-level)\t283 sec."
+            },
+            "thrust_vac_n": {
+              "value": 8227000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust in vacuum\t8,227 kN / 1,849,500 lbf"
+            },
+            "thrust_sl_n": {
+              "value": 7607000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust at sea Level\t7,607 kN / 1,710,000 lbf"
+            }
+          },
+          {
+            "dry_mass_kg": {
+              "value": 3900.0,
+              "unit_as_written": "kg",
+              "source_quote": "Empty mass\t3,900 kg / 8,598 lb"
+            },
+            "propellant_mass_kg": {
+              "value": 92670.0,
+              "unit_as_written": "kg",
+              "source_quote": "Propellant mass\t92,670 kg / 204,302 lb"
+            },
+            "isp_vac_s": {
+              "value": 348.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (vacuum)\t348 sec"
+            },
+            "isp_sl_s": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            },
+            "thrust_vac_n": {
+              "value": 981000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust\t981 kN / 220,500 lbf"
+            },
+            "thrust_sl_n": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            }
+          }
+        ],
+        "published_reference": {},
+        "ambiguities": [
+          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was named in the user message. The 'Specifications' section tables (first stage, second stage) appear to correspond to the current Block 5 variant based on context, but the document does not explicitly label those tables as Block 5.",
+          "The second-stage thrust is listed simply as 'Thrust' with no sea-level or vacuum qualifier in the section header, but it is described as a '1 vacuum' Merlin engine and the Isp is labeled 'Specific Impulse (vacuum)', so this thrust value is treated as vacuum thrust.",
+          "The second-stage Isp is labeled only 'Specific Impulse (vacuum)'; no sea-level Isp is provided for the second stage, as expected for a vacuum-optimized engine.",
+          "LEO payload capacity of 22,800 kg is listed for Full Thrust Block 3/4 and '\u2265 22,800 kg (expendable)' for Block 5; the value used here is from the Block 5 column as the most current active variant.",
+          "The document states 'Every Merlin engine produces 854 kN (192,000 lbf) of thrust' without specifying sea-level or vacuum context, so this per-engine figure was not used in the extraction."
+        ]
+      },
+      "missing_fields": [],
+      "blocking_issues": []
+    },
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    }
+  },
+  {
+    "id": "falcon9_leo_missing_stage2_isp",
+    "mission": {
+      "request": {
+        "payload_kg": 500.0,
+        "payload_source_quote": "500 kg",
+        "payload_derived": false,
+        "destination": "LEO",
+        "vehicle_name": "Falcon 9",
+        "target_altitude_km": null,
+        "missing_fields": [],
+        "ambiguities": []
+      },
+      "rocket": {
+        "name": "Falcon 9",
+        "variant": null,
+        "stages": [
+          {
+            "dry_mass_kg": {
+              "value": 25600.0,
+              "unit_as_written": "kg",
+              "source_quote": "Empty mass\t25,600 kg / 56,423 lb"
+            },
+            "propellant_mass_kg": {
+              "value": 395700.0,
+              "unit_as_written": "kg",
+              "source_quote": "Propellant mass\t395,700 kg/ 872,369 lb"
+            },
+            "isp_vac_s": {
+              "value": 312.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (vacuum sec)\t312 sec."
+            },
+            "isp_sl_s": {
+              "value": 283.0,
+              "unit_as_written": "sec",
+              "source_quote": "Specific Impulse (sea-level)\t283 sec."
+            },
+            "thrust_vac_n": {
+              "value": 8227000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust in vacuum\t8,227 kN / 1,849,500 lbf"
+            },
+            "thrust_sl_n": {
+              "value": 7607000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust at sea Level\t7,607 kN / 1,710,000 lbf"
+            }
+          },
+          {
+            "dry_mass_kg": {
+              "value": 3900.0,
+              "unit_as_written": "kg",
+              "source_quote": "Empty mass\t3,900 kg / 8,598 lb"
+            },
+            "propellant_mass_kg": {
+              "value": 92670.0,
+              "unit_as_written": "kg",
+              "source_quote": "Propellant mass\t92,670 kg / 204,302 lb"
+            },
+            "isp_vac_s": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            },
+            "isp_sl_s": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            },
+            "thrust_vac_n": {
+              "value": 981000.0,
+              "unit_as_written": "kN",
+              "source_quote": "Thrust\t981 kN / 220,500 lbf"
+            },
+            "thrust_sl_n": {
+              "value": null,
+              "unit_as_written": null,
+              "source_quote": null
+            }
+          }
+        ],
+        "published_reference": {},
+        "ambiguities": [
+          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was named in the user message. The 'Specifications' section tables (first stage, second stage) appear to correspond to the current Block 5 variant based on context, but the document does not explicitly label those tables as Block 5.",
+          "The second-stage thrust is listed simply as 'Thrust' with no sea-level or vacuum qualifier in the section header, but it is described as a '1 vacuum' Merlin engine and the Isp is labeled 'Specific Impulse (vacuum)', so this thrust value is treated as vacuum thrust.",
+          "The second-stage Isp is labeled only 'Specific Impulse (vacuum)'; no sea-level Isp is provided for the second stage, as expected for a vacuum-optimized engine.",
+          "LEO payload capacity of 22,800 kg is listed for Full Thrust Block 3/4 and '\u2265 22,800 kg (expendable)' for Block 5; the value used here is from the Block 5 column as the most current active variant.",
+          "The document states 'Every Merlin engine produces 854 kN (192,000 lbf) of thrust' without specifying sea-level or vacuum context, so this per-engine figure was not used in the extraction."
+        ]
+      },
+      "missing_fields": [],
+      "blocking_issues": []
+    },
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    }
+  }
+]
