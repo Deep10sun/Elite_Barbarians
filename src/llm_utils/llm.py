@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY = os.environ["TAMU_API_KEY"]
+API_KEY = os.getenv("TAMU_API_KEY")
 ENDPOINT = os.getenv("TAMUS_AI_CHAT_API_ENDPOINT", "https://chat-api.tamu.ai")
 MODEL = "protected.Claude Sonnet 4.6"   # or "protected.gemini-3.1-flash-lite"
 
@@ -36,6 +36,8 @@ def _content_from_sse(body):
 
 def call_model(prompt, system=None, model=None, temperature=None,
                max_tokens=4000, nonce=None):
+    if not API_KEY:
+        raise RuntimeError("TAMU_API_KEY is not set")
     # The gateway caches identical requests; nonce makes repeat calls distinct.
     if nonce is not None:
         system = f"{system or ''}\n[request {nonce}]".strip()

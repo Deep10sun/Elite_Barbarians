@@ -6,7 +6,9 @@ import json
 import math
 import re
 from pathlib import Path
+from statistics import mean
 from typing import Any
+from uuid import uuid4
 
 import matplotlib
 
@@ -170,8 +172,9 @@ def _burn_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
         stage_num = burn.get("stage")
         stage = stages[stage_num - 1] if isinstance(stage_num, int) and stage_num <= len(stages) else {}
         prop = max(0.0, burn.get("m0_kg", 0) - burn.get("mf_kg", 0))
-        thrust = (stage.get("thrust_sl_n", {}).get("value")
-                  if isinstance(stage.get("thrust_sl_n"), dict) else None)
+        thrust_field = "thrust_sl_n" if stage_num == 1 else "thrust_vac_n"
+        thrust = (stage.get(thrust_field, {}).get("value")
+                  if isinstance(stage.get(thrust_field), dict) else None)
         isp = burn.get("isp_used_s")
         duration = None
         if thrust and isp:
@@ -183,7 +186,8 @@ def _burn_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
     transfer = agent.get("transfer", {})
     for burn in transfer.get("burns", []):
         rows.append({"stage": "transfer", "name": burn.get("name", "transfer burn"), "start": time_s,
-                     "duration": None, "dv": burn.get("dv_ms"), "prop": None, "before": None, "after": None})
+                     "duration": transfer.get("time_s"), "dv": burn.get("dv_ms"),
+                     "prop": None, "before": None, "after": None})
     return rows
 
 
@@ -288,7 +292,158 @@ def _plot_dv(agent: dict[str, Any], path: Path) -> bool:
     return True
 
 
-def _markdown(result: dict[str, Any], out_dir: Path, use_llm: bool) -> str:
+def _benchmark_mean(trials: list[dict[str, Any]], metric: str, unit: str = "") -> str:
+    values = [
+        trial["scores"][metric]
+        for trial in trials
+        if "scores" in trial and trial["scores"][metric] is not None
+    ]
+    if not values:
+        return "— (n=0)"
+    return f"{mean(values):.1f}{unit} (n={len(values)})"
+
+
+def _benchmark_mission(result: dict[str, Any]):
+    from .llm_utils.schema import Mission, MissionResult
+
+    mission_data = {
+        "request": dict(result.get("request", {})),
+        "rocket": dict(result.get("rocket", {})),
+        "missing_fields": list(result.get("missing_fields", [])),
+    }
+    mission_data["request"].setdefault(
+        "vehicle_name",
+        mission_data["rocket"].get("name"),
+    )
+    mission = Mission.model_validate(mission_data)
+
+    agent = _agent(result)
+    facts = agent.get("facts", {})
+    verdict = facts.get("verdict") or agent.get("verdict")
+    if verdict not in {"feasible", "infeasible", "missing_data"}:
+        verdict = "infeasible"
+
+    ceiling = facts.get("ceiling_kg_stock")
+    if ceiling is None:
+        ceiling = facts.get("ceiling_kg")
+    if ceiling is None:
+        ceiling = agent.get("max_payload", {}).get("max_payload_kg")
+
+    requested = facts.get("requested_kg")
+    if requested is None:
+        requested = mission.request.payload_kg
+    shortfall = facts.get("shortfall_kg")
+    if shortfall is None and verdict != "missing_data" and requested is not None and ceiling is not None:
+        shortfall = max(0.0, requested - ceiling)
+
+    expected = MissionResult(
+        verdict=verdict,
+        payload_ceiling_kg=ceiling,
+        shortfall_kg=shortfall,
+        missing_fields=list(result.get("missing_fields", [])),
+    )
+    return mission, expected
+
+
+def _benchmark_markdown(
+    result: dict[str, Any],
+    trials: int,
+    use_llm: bool,
+) -> str:
+    from .benchmark_methods import full_agent, llm_only, rule_based
+    from .llm_utils.schema import Mission, MissionResult
+
+    try:
+        mission, expected = _benchmark_mission(result)
+    except Exception as error:
+        return (
+            "## Benchmark comparison\n\n"
+            "Benchmark unavailable: the saved result does not contain a valid "
+            f"mission for the benchmark runner ({type(error).__name__}: {error})."
+        )
+
+    methods = {
+        "full_agent": full_agent,
+        "llm_only": llm_only,
+        "rule_based": rule_based,
+    }
+    run_id = uuid4().hex
+    rows = []
+    for name, method in methods.items():
+        for trial in range(1, trials + 1):
+            row = {
+                "case": "saved_result",
+                "method": name,
+                "trial": trial,
+                "expected": expected.model_dump(),
+            }
+            if not use_llm and name in {"full_agent", "llm_only"}:
+                row["error"] = "Skipped because report generation used --no-llm"
+                rows.append(row)
+                continue
+            nonce = f"{run_id}-saved_result-{name}-{trial}"
+            try:
+                prediction = method(mission.model_copy(deep=True), nonce)
+                actual = prediction.model_dump()
+                row["prediction"] = actual
+                row["scores"] = {
+                    "verdict_correct": prediction.verdict == expected.verdict,
+                    "payload_error_kg": (
+                        None
+                        if prediction.payload_ceiling_kg is None or expected.payload_ceiling_kg is None
+                        else abs(prediction.payload_ceiling_kg - expected.payload_ceiling_kg)
+                    ),
+                    "shortfall_error_kg": (
+                        None
+                        if prediction.shortfall_kg is None or expected.shortfall_kg is None
+                        else abs(prediction.shortfall_kg - expected.shortfall_kg)
+                    ),
+                    "missing_fields_correct": (
+                        set(prediction.missing_fields) == set(expected.missing_fields)
+                        if expected.missing_fields
+                        else None
+                    ),
+                }
+            except Exception as error:
+                row["error"] = f"{type(error).__name__}: {error}"
+            rows.append(row)
+
+    lines = [
+        "## Benchmark comparison",
+        "",
+        "| Method | Verdict correct | Mean ceiling error | Mean shortfall error | Missing fields correct | Errors |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for name in methods:
+        attempted = [row for row in rows if row["method"] == name]
+        completed = [row for row in attempted if "scores" in row]
+        verdicts = sum(row["scores"]["verdict_correct"] for row in completed)
+        missing_attempts = sum(bool(row["expected"]["missing_fields"]) for row in attempted)
+        missing_correct = sum(
+            row["scores"]["missing_fields_correct"] is True
+            for row in completed
+        )
+        ceiling = _benchmark_mean(completed, "payload_error_kg", " kg")
+        shortfall = _benchmark_mean(completed, "shortfall_error_kg", " kg")
+        errors = [row for row in attempted if "error" in row]
+        if all(row.get("error", "").startswith("Skipped") for row in errors) and len(errors) == len(attempted):
+            errors_text = "skipped (--no-llm)"
+        else:
+            errors_text = str(len(attempted) - len(completed))
+        lines.append(
+            f"| {name} | {verdicts}/{len(attempted)} | {ceiling} | {shortfall} | "
+            f"{missing_correct}/{missing_attempts} | {errors_text} |"
+        )
+    return "\n".join(lines)
+
+
+def _markdown(
+    result: dict[str, Any],
+    out_dir: Path,
+    use_llm: bool,
+    include_benchmark: bool = True,
+    benchmark_trials: int = 1,
+) -> str:
     agent, facts = _agent(result), _facts(result)
     verdict_text, verdict_template = _prose(result, facts, "verdict", use_llm)
     recommendation, recommendation_template = _prose(result, facts, "recommendation", use_llm)
@@ -312,11 +467,22 @@ def _markdown(result: dict[str, Any], out_dir: Path, use_llm: bool) -> str:
         f"- Shortfall: {_fmt(facts.get('shortfall_kg'), ' kg')} ({_fmt(facts.get('shortfall_pct'), '%')})",
         f"- Propellant margin: {_fmt(facts.get('propellant_margin_kg'), ' kg')} ({_fmt(facts.get('propellant_margin_pct'), '%')})",
         f"- Delta-v required vs. available: {_fmt(facts.get('required_delta_v_ms'), ' m/s')} vs. {_fmt(facts.get('available_delta_v_ms'), ' m/s')}", "",
+    ]
+    if include_benchmark:
+        lines += ["", _benchmark_markdown(result, benchmark_trials, use_llm)]
+    lines += [
+        "",
         "## Burn table",
-        "| Stage | Burn | Start (s) | Duration (s) | Delta-v (m/s) | Propellant (kg) | Mass before (kg) | Mass after (kg) |",
+        "| Stage | Burn / coast | Start (s) | Duration / travel (s) | Delta-v (m/s) | Propellant (kg) | Mass before (kg) | Mass after (kg) |",
         "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     lines += [f"| {r['stage']} | {r['name']} | {_fmt(r['start'])} | {_fmt(r['duration'])} | {_fmt(r['dv'])} | {_fmt(r['prop'])} | {_fmt(r['before'])} | {_fmt(r['after'])} |" for r in rows] or ["| — | No burn data | — | — | — | — | — | — |"]
+    lines += [
+        "",
+        "For ascent rows, duration is the modeled powered-burn time. "
+        "For the transfer row, duration is the modeled coast/travel time; "
+        "propellant and mass fields are not supplied by the transfer model.",
+    ]
     lines += ["", "## Plots"] + (links or ["No trajectory or budget plot data was available."])
     revisions = [h for h in agent.get("history", []) if h.get("event") == "revision"]
     if revisions:
@@ -341,16 +507,45 @@ def _markdown(result: dict[str, Any], out_dir: Path, use_llm: bool) -> str:
             if isinstance(sourced, dict) and sourced.get("value") is not None:
                 origin = "PUBLISHED" if sourced.get("source_quote") else "ESTIMATED"
                 lines.append(f"- Stage {index} `{field}`: {_fmt(sourced['value'])} ({origin}); source: {sourced.get('source_quote') or 'not supplied'}")
+    request_destination = request.get("destination")
+    transfer_destination = agent.get("transfer", {}).get("destination")
+    if (
+        request_destination
+        and transfer_destination
+        and request_destination != transfer_destination
+    ):
+        lines.append(
+            f"- WARNING: Destination mismatch: result request is "
+            f"`{request_destination}`, but the agent transfer result is "
+            f"`{transfer_destination}`. Regenerate this report from a fresh "
+            "mission result."
+        )
     lines.append(f"- Model assumptions: {agent.get('ascent', {}).get('assumptions', {})}; {agent.get('transfer', {}).get('assumptions', 'not supplied')}.")
     return "\n".join(lines) + "\n"
 
 
-def generate_report(result: dict[str, Any], out_dir: str | Path) -> Path:
+def generate_report(
+    result: dict[str, Any],
+    out_dir: str | Path,
+    *,
+    use_llm: bool = True,
+    include_benchmark: bool = True,
+    benchmark_trials: int = 1,
+) -> Path:
     """Write ``report.md`` and any available PNG plots, returning its path."""
     output = Path(out_dir)
     output.mkdir(parents=True, exist_ok=True)
     report_path = output / "report.md"
-    report_path.write_text(_markdown(result, output, use_llm=True), encoding="utf-8")
+    report_path.write_text(
+        _markdown(
+            result,
+            output,
+            use_llm=use_llm,
+            include_benchmark=include_benchmark,
+            benchmark_trials=benchmark_trials,
+        ),
+        encoding="utf-8",
+    )
     return report_path
 
 
@@ -359,10 +554,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("result_json", type=Path)
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--no-llm", action="store_true")
+    parser.add_argument("--no-benchmark", action="store_true")
+    parser.add_argument("--benchmark-trials", type=int, choices=(1, 3, 4, 5), default=1)
     args = parser.parse_args(argv)
     result = json.loads(args.result_json.read_text(encoding="utf-8"))
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "report.md").write_text(_markdown(result, args.out, not args.no_llm), encoding="utf-8")
+    (args.out / "report.md").write_text(
+        _markdown(
+            result,
+            args.out,
+            use_llm=not args.no_llm,
+            include_benchmark=not args.no_benchmark,
+            benchmark_trials=args.benchmark_trials,
+        ),
+        encoding="utf-8",
+    )
     return 0
 
 

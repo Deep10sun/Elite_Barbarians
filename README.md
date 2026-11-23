@@ -111,6 +111,21 @@ python -m src.run_mission \
   rockets/falcon9.txt 5 > result.json
 ```
 
+## Benchmark a saved mission report
+
+Report generation includes a benchmark comparison based on `result.json`, not
+the fixed benchmark fixtures:
+
+```bash
+python -m src.report result.json --out reports/my-mission/ --no-llm
+```
+
+The benchmark section compares `full_agent`, `llm_only`, and `rule_based`
+against the saved mission and appends the Markdown table to `report.md`.
+Without `--no-llm`, the full-agent and direct-LLM benchmark methods require
+`TAMU_API_KEY`. Use `--benchmark-trials 3` to repeat the comparison three
+times, or `--no-benchmark` to omit the section.
+
 If parsing cannot find required information, the command prints a JSON error
 with `"status": "error"` and a `missing_fields` list, then exits with status 1.
 Add the missing payload, destination, or stage properties to the request or

@@ -1,0 +1,372 @@
+{
+  "request": {
+    "payload_kg": 3000.0,
+    "payload_source_quote": "100 Kilograms",
+    "payload_derived": true,
+    "destination": "Moon",
+    "vehicle_name": "Falcon-9 Rocket",
+    "target_altitude_km": null,
+    "missing_fields": [],
+    "ambiguities": [
+      "No specific target altitude or lunar orbit parameters were stated; target_altitude_km set to null.",
+      "The destination 'to the moon' is interpreted as a Moon destination, but it is unclear whether the intent is lunar orbit, lunar surface, or a translunar injection trajectory.",
+      "The term 'space' and 'outerspace' are mentioned initially but then overridden by the more specific 'to the moon'; destination resolved as Moon.",
+      "Payload mass is based solely on passenger body weight; no additional mass for life support, spacecraft, luggage, or other equipment was stated."
+    ]
+  },
+  "rocket": {
+    "name": "Falcon 9",
+    "variant": null,
+    "stages": [
+      {
+        "dry_mass_kg": {
+          "value": 25600.0,
+          "unit_as_written": "kg",
+          "source_quote": "Empty mass\t25,600 kg / 56,423 lb"
+        },
+        "propellant_mass_kg": {
+          "value": 395700.0,
+          "unit_as_written": "kg",
+          "source_quote": "Propellant mass\t395,700 kg/ 872,369 lb"
+        },
+        "isp_vac_s": {
+          "value": 312.0,
+          "unit_as_written": "sec.",
+          "source_quote": "Specific Impulse (vacuum sec)\t312 sec."
+        },
+        "isp_sl_s": {
+          "value": 283.0,
+          "unit_as_written": "sec.",
+          "source_quote": "Specific Impulse (sea-level)\t283 sec."
+        },
+        "thrust_vac_n": {
+          "value": 8227000.0,
+          "unit_as_written": "kN",
+          "source_quote": "Thrust in vacuum\t8,227 kN / 1,849,500 lbf"
+        },
+        "thrust_sl_n": {
+          "value": 7607000.0,
+          "unit_as_written": "kN",
+          "source_quote": "Thrust at sea Level\t7,607 kN / 1,710,000 lbf"
+        }
+      },
+      {
+        "dry_mass_kg": {
+          "value": 3900.0,
+          "unit_as_written": "kg",
+          "source_quote": "Empty mass\t3,900 kg / 8,598 lb"
+        },
+        "propellant_mass_kg": {
+          "value": 92670.0,
+          "unit_as_written": "kg",
+          "source_quote": "Propellant mass\t92,670 kg / 204,302 lb"
+        },
+        "isp_vac_s": {
+          "value": 348.0,
+          "unit_as_written": "sec",
+          "source_quote": "Specific Impulse (vacuum)\t348 sec"
+        },
+        "isp_sl_s": {
+          "value": null,
+          "unit_as_written": null,
+          "source_quote": null
+        },
+        "thrust_vac_n": {
+          "value": 981000.0,
+          "unit_as_written": "kN",
+          "source_quote": "Thrust\t981 kN / 220,500 lbf"
+        },
+        "thrust_sl_n": {
+          "value": null,
+          "unit_as_written": null,
+          "source_quote": null
+        }
+      }
+    ],
+    "published_reference": {
+      "leo_payload_kg": 22800
+    },
+    "ambiguities": [
+      "No specific variant was named in the user request. The specifications table in the document (height, mass, thrust, Isp values) does not explicitly label which variant it describes. It is assumed to correspond to the current Block 5 version based on document context, but this is not explicitly stated in the specifications section.",
+      "The second stage thrust is listed as '981 kN / 220,500 lbf' with no qualifier of sea-level or vacuum. Given it is a vacuum-optimized Merlin 1D Vacuum engine, it is recorded under thrust_vac_n, but the document does not explicitly label it as vacuum thrust in that table entry.",
+      "The second stage Isp is labeled 'Specific Impulse (vacuum)' with no sea-level value provided, consistent with a vacuum engine.",
+      "The LEO payload figure of 22,800 kg is listed for 'Full Thrust Block 3 and Block 4' and '\u2265 22,800 kg (expendable)' for Block 5 from Cape Canaveral; the reusable figure is \u2265 17,400 kg. The expendable figure was used as the published reference.",
+      "The performance table lists multiple variants (v1.0, v1.1, Full Thrust Block 3/4, Block 5) with different LEO payload values (8,500\u20139,000 kg; 13,150 kg; 22,800 kg; \u226522,800 kg respectively). Without a specified variant, the Block 5 expendable figure was selected."
+    ]
+  },
+  "missing_fields": [],
+  "blocking_issues": [],
+  "agent": {
+    "status": "ok",
+    "verdict": "feasible",
+    "requested_payload_kg": 3000.0,
+    "as_requested_evaluation": {
+      "turn": 0,
+      "iteration": 0,
+      "event": "evaluation",
+      "candidate": {
+        "payload_kg": 3000.0,
+        "added_propellant_kg": [
+          0.0,
+          0.0
+        ]
+      },
+      "ascent": {
+        "payload_kg": 3000.0,
+        "reached_orbit": true,
+        "dv_total_ms": 13269.5,
+        "dv_needed_ms": 9300.0,
+        "margin_ms": 3969.5,
+        "liftoff_twr": 1.49,
+        "burn_table": [
+          {
+            "stage": 1,
+            "m0_kg": 520870,
+            "mf_kg": 125170,
+            "isp_used_s": 297.5,
+            "dv_ms": 4159.8
+          },
+          {
+            "stage": 2,
+            "m0_kg": 99570,
+            "mf_kg": 6900,
+            "isp_used_s": 348.0,
+            "dv_ms": 9109.7
+          }
+        ],
+        "assumptions": {
+          "losses_ms": 1500.0,
+          "v_target_ms": 7800.0,
+          "s1_isp_mode": "average",
+          "model": "rocket equation minus fixed loss budget"
+        }
+      },
+      "transfer": {
+        "destination": "Moon",
+        "parking_altitude_km": 200.0,
+        "status": "ok",
+        "dv_total_ms": 3131.345,
+        "time_s": 430095.304,
+        "burns": [
+          {
+            "name": "trans-lunar injection",
+            "dv_ms": 3131.345
+          }
+        ],
+        "arrival_speed_ms": 186.7959331956984,
+        "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
+        "feasible": true
+      },
+      "margin": {
+        "status": "ok",
+        "feasible": true,
+        "margin_ms": 681.6,
+        "margin_pct": 20.73,
+        "reserve_fraction": 0.05,
+        "transfer_dv_ms": 3131.3,
+        "reserved_transfer_dv_ms": 3287.9,
+        "propellant_needed_kg": 0.0,
+        "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+      }
+    },
+    "initial_candidate": {
+      "payload_kg": 3000.0,
+      "added_propellant_kg": [
+        0.0,
+        0.0
+      ]
+    },
+    "candidate": {
+      "payload_kg": 3000.0,
+      "added_propellant_kg": [
+        0.0,
+        0.0
+      ]
+    },
+    "ascent": {
+      "payload_kg": 3000.0,
+      "reached_orbit": true,
+      "dv_total_ms": 13269.5,
+      "dv_needed_ms": 9300.0,
+      "margin_ms": 3969.5,
+      "liftoff_twr": 1.49,
+      "burn_table": [
+        {
+          "stage": 1,
+          "m0_kg": 520870,
+          "mf_kg": 125170,
+          "isp_used_s": 297.5,
+          "dv_ms": 4159.8
+        },
+        {
+          "stage": 2,
+          "m0_kg": 99570,
+          "mf_kg": 6900,
+          "isp_used_s": 348.0,
+          "dv_ms": 9109.7
+        }
+      ],
+      "assumptions": {
+        "losses_ms": 1500.0,
+        "v_target_ms": 7800.0,
+        "s1_isp_mode": "average",
+        "model": "rocket equation minus fixed loss budget"
+      }
+    },
+    "transfer": {
+      "destination": "Moon",
+      "parking_altitude_km": 200.0,
+      "status": "ok",
+      "dv_total_ms": 3131.345,
+      "time_s": 430095.304,
+      "burns": [
+        {
+          "name": "trans-lunar injection",
+          "dv_ms": 3131.345
+        }
+      ],
+      "arrival_speed_ms": 186.7959331956984,
+      "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
+      "feasible": true
+    },
+    "margin": {
+      "status": "ok",
+      "feasible": true,
+      "margin_ms": 681.6,
+      "margin_pct": 20.73,
+      "reserve_fraction": 0.05,
+      "transfer_dv_ms": 3131.3,
+      "reserved_transfer_dv_ms": 3287.9,
+      "propellant_needed_kg": 0.0,
+      "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+    },
+    "history": [
+      {
+        "turn": 0,
+        "iteration": 0,
+        "event": "evaluation",
+        "candidate": {
+          "payload_kg": 3000.0,
+          "added_propellant_kg": [
+            0.0,
+            0.0
+          ]
+        },
+        "ascent": {
+          "payload_kg": 3000.0,
+          "reached_orbit": true,
+          "dv_total_ms": 13269.5,
+          "dv_needed_ms": 9300.0,
+          "margin_ms": 3969.5,
+          "liftoff_twr": 1.49,
+          "burn_table": [
+            {
+              "stage": 1,
+              "m0_kg": 520870,
+              "mf_kg": 125170,
+              "isp_used_s": 297.5,
+              "dv_ms": 4159.8
+            },
+            {
+              "stage": 2,
+              "m0_kg": 99570,
+              "mf_kg": 6900,
+              "isp_used_s": 348.0,
+              "dv_ms": 9109.7
+            }
+          ],
+          "assumptions": {
+            "losses_ms": 1500.0,
+            "v_target_ms": 7800.0,
+            "s1_isp_mode": "average",
+            "model": "rocket equation minus fixed loss budget"
+          }
+        },
+        "transfer": {
+          "destination": "Moon",
+          "parking_altitude_km": 200.0,
+          "status": "ok",
+          "dv_total_ms": 3131.345,
+          "time_s": 430095.304,
+          "burns": [
+            {
+              "name": "trans-lunar injection",
+              "dv_ms": 3131.345
+            }
+          ],
+          "arrival_speed_ms": 186.7959331956984,
+          "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
+          "feasible": true
+        },
+        "margin": {
+          "status": "ok",
+          "feasible": true,
+          "margin_ms": 681.6,
+          "margin_pct": 20.73,
+          "reserve_fraction": 0.05,
+          "transfer_dv_ms": 3131.3,
+          "reserved_transfer_dv_ms": 3287.9,
+          "propellant_needed_kg": 0.0,
+          "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+        }
+      },
+      {
+        "turn": 1,
+        "iteration": 0,
+        "event": "find_max_payload",
+        "candidate": {
+          "payload_kg": 3000.0,
+          "added_propellant_kg": [
+            0.0,
+            0.0
+          ]
+        },
+        "result": {
+          "max_payload_kg": 4590
+        }
+      },
+      {
+        "turn": 2,
+        "iteration": 0,
+        "event": "find_max_payload_stock",
+        "candidate": {
+          "payload_kg": 0.0,
+          "added_propellant_kg": [
+            0.0,
+            0.0
+          ]
+        },
+        "result": {
+          "max_payload_kg": 4590
+        }
+      }
+    ],
+    "facts": {
+      "verdict": "feasible",
+      "verdict_as_requested": "feasible",
+      "initial_verdict": "feasible",
+      "final_verdict": "feasible",
+      "requested_kg": 3000.0,
+      "ceiling_kg": 4590,
+      "ceiling_kg_stock": 4590,
+      "shortfall_kg": 0.0,
+      "shortfall_pct": 0.0,
+      "recommended_changes": {
+        "payload_kg": 3000.0,
+        "added_propellant_kg": [
+          0.0,
+          0.0
+        ]
+      },
+      "final_margin_ms": 681.6,
+      "initial_margin_ms": 681.6
+    },
+    "explanation": "Feasible as requested: 3000 kg closes.",
+    "termination_reason": "feasible_as_requested",
+    "iterations_requested": 5,
+    "iterations_used": 0,
+    "max_payload": {
+      "max_payload_kg": 4590
+    }
+  }
+}

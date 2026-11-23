@@ -83,11 +83,11 @@
         ],
         "published_reference": {},
         "ambiguities": [
-          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was named in the user message. The 'Specifications' section tables (first stage, second stage) appear to correspond to the current Block 5 variant based on context, but the document does not explicitly label those tables as Block 5.",
-          "The second-stage thrust is listed simply as 'Thrust' with no sea-level or vacuum qualifier in the section header, but it is described as a '1 vacuum' Merlin engine and the Isp is labeled 'Specific Impulse (vacuum)', so this thrust value is treated as vacuum thrust.",
-          "The second-stage Isp is labeled only 'Specific Impulse (vacuum)'; no sea-level Isp is provided for the second stage, as expected for a vacuum-optimized engine.",
-          "LEO payload capacity of 22,800 kg is listed for Full Thrust Block 3/4 and '\u2265 22,800 kg (expendable)' for Block 5; the value used here is from the Block 5 column as the most current active variant.",
-          "The document states 'Every Merlin engine produces 854 kN (192,000 lbf) of thrust' without specifying sea-level or vacuum context, so this per-engine figure was not used in the extraction."
+          "The specifications table in the document does not specify which variant it applies to; it appears to describe the current/Block 5 version based on context, but this is not explicitly stated in the table header.",
+          "The second stage thrust is listed simply as 'Thrust' without specifying sea-level or vacuum; however, since the second stage uses a vacuum-optimized Merlin 1D Vacuum engine, it is recorded under thrust_vac_n. The document does not explicitly label it as vacuum thrust.",
+          "The second stage isp is labeled 'Specific Impulse (vacuum)' and assigned to isp_vac_s; no sea-level Isp is provided for the second stage.",
+          "LEO payload capacity of 22,800 kg is listed for the Block 5 expendable configuration; reusable LEO payload is listed as \u226517,400 kg. The 22,800 kg figure was selected as the published reference for the unspecified variant.",
+          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5); the specifications table is used as the primary source but its variant applicability is ambiguous."
         ]
       },
       "missing_fields": [],
@@ -184,11 +184,11 @@
         ],
         "published_reference": {},
         "ambiguities": [
-          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was named in the user message. The 'Specifications' section tables (first stage, second stage) appear to correspond to the current Block 5 variant based on context, but the document does not explicitly label those tables as Block 5.",
-          "The second-stage thrust is listed simply as 'Thrust' with no sea-level or vacuum qualifier in the section header, but it is described as a '1 vacuum' Merlin engine and the Isp is labeled 'Specific Impulse (vacuum)', so this thrust value is treated as vacuum thrust.",
-          "The second-stage Isp is labeled only 'Specific Impulse (vacuum)'; no sea-level Isp is provided for the second stage, as expected for a vacuum-optimized engine.",
-          "LEO payload capacity of 22,800 kg is listed for Full Thrust Block 3/4 and '\u2265 22,800 kg (expendable)' for Block 5; the value used here is from the Block 5 column as the most current active variant.",
-          "The document states 'Every Merlin engine produces 854 kN (192,000 lbf) of thrust' without specifying sea-level or vacuum context, so this per-engine figure was not used in the extraction."
+          "The specifications table in the document does not specify which variant it applies to; it appears to describe the current/Block 5 version based on context, but this is not explicitly stated in the table header.",
+          "The second stage thrust is listed simply as 'Thrust' without specifying sea-level or vacuum; however, since the second stage uses a vacuum-optimized Merlin 1D Vacuum engine, it is recorded under thrust_vac_n. The document does not explicitly label it as vacuum thrust.",
+          "The second stage isp is labeled 'Specific Impulse (vacuum)' and assigned to isp_vac_s; no sea-level Isp is provided for the second stage.",
+          "LEO payload capacity of 22,800 kg is listed for the Block 5 expendable configuration; reusable LEO payload is listed as \u226517,400 kg. The 22,800 kg figure was selected as the published reference for the unspecified variant.",
+          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5); the specifications table is used as the primary source but its variant applicability is ambiguous."
         ]
       },
       "missing_fields": [],
@@ -285,11 +285,11 @@
         ],
         "published_reference": {},
         "ambiguities": [
-          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was named in the user message. The 'Specifications' section tables (first stage, second stage) appear to correspond to the current Block 5 variant based on context, but the document does not explicitly label those tables as Block 5.",
-          "The second-stage thrust is listed simply as 'Thrust' with no sea-level or vacuum qualifier in the section header, but it is described as a '1 vacuum' Merlin engine and the Isp is labeled 'Specific Impulse (vacuum)', so this thrust value is treated as vacuum thrust.",
-          "The second-stage Isp is labeled only 'Specific Impulse (vacuum)'; no sea-level Isp is provided for the second stage, as expected for a vacuum-optimized engine.",
-          "LEO payload capacity of 22,800 kg is listed for Full Thrust Block 3/4 and '\u2265 22,800 kg (expendable)' for Block 5; the value used here is from the Block 5 column as the most current active variant.",
-          "The document states 'Every Merlin engine produces 854 kN (192,000 lbf) of thrust' without specifying sea-level or vacuum context, so this per-engine figure was not used in the extraction."
+          "The specifications table in the document does not specify which variant it applies to; it appears to describe the current/Block 5 version based on context, but this is not explicitly stated in the table header.",
+          "The second stage thrust is listed simply as 'Thrust' without specifying sea-level or vacuum; however, since the second stage uses a vacuum-optimized Merlin 1D Vacuum engine, it is recorded under thrust_vac_n. The document does not explicitly label it as vacuum thrust.",
+          "The second stage isp is labeled 'Specific Impulse (vacuum)' and assigned to isp_vac_s; no sea-level Isp is provided for the second stage.",
+          "LEO payload capacity of 22,800 kg is listed for the Block 5 expendable configuration; reusable LEO payload is listed as \u226517,400 kg. The 22,800 kg figure was selected as the published reference for the unspecified variant.",
+          "The document describes multiple variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5); the specifications table is used as the primary source but its variant applicability is ambiguous."
         ]
       },
       "missing_fields": [],
