@@ -1,0 +1,659 @@
+[
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "full_agent",
+    "trial": 1,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 19920.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 2880.0,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "full_agent",
+    "trial": 2,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 19920.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 2880.0,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "full_agent",
+    "trial": 3,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 19920.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 2880.0,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "llm_only",
+    "trial": 1,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 21400.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1400.0,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "llm_only",
+    "trial": 2,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 21400.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1400.0,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "llm_only",
+    "trial": 3,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 21400.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1400.0,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "rule_based",
+    "trial": 1,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 21428.451692809234,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1371.5483071907656,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "rule_based",
+    "trial": 2,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 21428.451692809234,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1371.5483071907656,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_feasible",
+    "method": "rule_based",
+    "trial": 3,
+    "expected": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "feasible",
+      "payload_ceiling_kg": 21428.451692809234,
+      "shortfall_kg": 0.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1371.5483071907656,
+      "shortfall_error_kg": 0.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "full_agent",
+    "trial": 1,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 19920.0,
+      "shortfall_kg": 80080.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 2880.0,
+      "shortfall_error_kg": 2880.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "full_agent",
+    "trial": 2,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 19920.0,
+      "shortfall_kg": 80080.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 2880.0,
+      "shortfall_error_kg": 2880.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "full_agent",
+    "trial": 3,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 19920.0,
+      "shortfall_kg": 80080.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 2880.0,
+      "shortfall_error_kg": 2880.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "llm_only",
+    "trial": 1,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 21400.0,
+      "shortfall_kg": 78600.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1400.0,
+      "shortfall_error_kg": 1400.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "llm_only",
+    "trial": 2,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 21400.0,
+      "shortfall_kg": 78600.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1400.0,
+      "shortfall_error_kg": 1400.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "llm_only",
+    "trial": 3,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 21300.0,
+      "shortfall_kg": 78700.0,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1500.0,
+      "shortfall_error_kg": 1500.0,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "rule_based",
+    "trial": 1,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 21428.451692809234,
+      "shortfall_kg": 78571.54830719077,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1371.5483071907656,
+      "shortfall_error_kg": 1371.5483071907656,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "rule_based",
+    "trial": 2,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 21428.451692809234,
+      "shortfall_kg": 78571.54830719077,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1371.5483071907656,
+      "shortfall_error_kg": 1371.5483071907656,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_infeasible",
+    "method": "rule_based",
+    "trial": 3,
+    "expected": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 22800.0,
+      "shortfall_kg": 77200.0,
+      "missing_fields": []
+    },
+    "prediction": {
+      "verdict": "infeasible",
+      "payload_ceiling_kg": 21428.451692809234,
+      "shortfall_kg": 78571.54830719077,
+      "missing_fields": []
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": 1371.5483071907656,
+      "shortfall_error_kg": 1371.5483071907656,
+      "missing_fields_correct": null
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "full_agent",
+    "trial": 1,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "full_agent",
+    "trial": 2,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "full_agent",
+    "trial": 3,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "llm_only",
+    "trial": 1,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "llm_only",
+    "trial": 2,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "llm_only",
+    "trial": 3,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "rule_based",
+    "trial": 1,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "rule_based",
+    "trial": 2,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  },
+  {
+    "case": "falcon9_leo_missing_stage2_isp",
+    "method": "rule_based",
+    "trial": 3,
+    "expected": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "prediction": {
+      "verdict": "missing_data",
+      "payload_ceiling_kg": null,
+      "shortfall_kg": null,
+      "missing_fields": [
+        "stage2.isp_vac_s"
+      ]
+    },
+    "scores": {
+      "verdict_correct": true,
+      "payload_error_kg": null,
+      "shortfall_error_kg": null,
+      "missing_fields_correct": true
+    }
+  }
+]

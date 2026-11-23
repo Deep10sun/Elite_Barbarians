@@ -1,12 +1,15 @@
 import math
 
 from .ascent_loop.agent import run_agent
+from .ascent_loop.physics import build_rocket, simulate_ascent
+from .ascent_loop.transfer import calculate_transfer
 from .llm_parser.parser import find_missing
 from .llm_utils.llm import call_model, extract_json
 from .llm_utils.schema import Mission, MissionResult
 
 
 LEO_BUDGET_MS = 9_300.0
+TRANSFER_RESERVE_FRACTION = 0.05
 
 
 def result_for_payload(verdict, requested_kg, ceiling_kg):
@@ -75,39 +78,65 @@ def rule_based(mission: Mission, nonce: str) -> MissionResult:
     missing = find_missing(mission.request, mission.rocket)
     if missing:
         return MissionResult(verdict="missing_data", missing_fields=missing)
-    if mission.request.destination != "LEO":
-        raise ValueError("The starter rule-based benchmark supports LEO only.")
 
-    stages = [
-        (s.dry_mass_kg.value, s.propellant_mass_kg.value, s.isp_vac_s.value)
-        for s in mission.rocket.stages
-    ]
-    if any(not math.isfinite(x) or x <= 0 for stage in stages for x in stage):
+    rocket_spec = {
+        "name": mission.rocket.name,
+        "stages": [
+            {
+                "dry_mass_kg": stage.dry_mass_kg.value,
+                "propellant_mass_kg": stage.propellant_mass_kg.value,
+                "isp_vac_s": stage.isp_vac_s.value,
+                "isp_sl_s": stage.isp_sl_s.value,
+                "thrust_sl_n": stage.thrust_sl_n.value,
+            }
+            for stage in mission.rocket.stages
+        ],
+    }
+    rocket = build_rocket(rocket_spec)
+    if any(
+        not math.isfinite(value) or value <= 0
+        for stage in rocket.stages
+        for value in (stage.dry_mass_kg, stage.propellant_mass_kg, stage.isp_vac_s)
+    ):
         raise ValueError("Stage masses and specific impulse must be positive.")
 
+    parking_altitude_km = (
+        mission.request.target_altitude_km
+        if mission.request.target_altitude_km is not None
+        else 200.0
+    )
+    transfer = calculate_transfer(
+        mission.request.destination,
+        parking_altitude_km,
+    )
+    if transfer.get("status") != "ok":
+        raise ValueError(
+            f"Rule-based benchmark has no transfer model for "
+            f"{mission.request.destination!r}"
+        )
+    reserved_transfer_dv = transfer["dv_total_ms"] * (1.0 + TRANSFER_RESERVE_FRACTION)
+
     def available_delta_v(payload_kg):
-        carried_mass = payload_kg
-        total = 0.0
-        for dry_mass, propellant_mass, isp in reversed(stages):
-            burnout_mass = carried_mass + dry_mass
-            total += 9.80665 * isp * math.log1p(propellant_mass / burnout_mass)
-            carried_mass = burnout_mass + propellant_mass
-        return total
+        ascent = simulate_ascent(rocket, payload_kg)
+        return ascent["dv_total_ms"]
+
+    def required_delta_v():
+        return LEO_BUDGET_MS + reserved_transfer_dv
 
     requested = mission.request.payload_kg
     verdict = (
-        "feasible" if available_delta_v(requested) >= LEO_BUDGET_MS
+        "feasible" if available_delta_v(requested) >= required_delta_v()
         else "infeasible"
     )
 
     ceiling = None
-    if available_delta_v(0.0) >= LEO_BUDGET_MS:
+    if available_delta_v(0.0) >= required_delta_v():
         low, high = 0.0, 1_000.0
-        while available_delta_v(high) >= LEO_BUDGET_MS:
+        while available_delta_v(high) >= required_delta_v():
             high *= 2
         for _ in range(50):
             middle = (low + high) / 2
-            if available_delta_v(middle) >= LEO_BUDGET_MS:
+            if available_delta_v(middle) >= required_delta_v():
                 low = middle
             else:
                 high = middle
