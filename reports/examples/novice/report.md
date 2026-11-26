@@ -2,7 +2,7 @@
 
 ## Verdict
 **FEASIBLE**
-The mission is **feasible**, with an available delta-v of 13269.5 m/s exceeding the required 12587.9 m/s by a margin of 681.6 m/s, delivering the requested 3000.0 kg payload within the 4590 kg ceiling with a shortfall of 0.0 kg.
+The mission is **feasible**, delivering a 3000.0 kg payload with 13269.5 m/s available delta-v against a 12587.9 m/s requirement, leaving a margin of 681.6 m/s and a shortfall of 0.0 kg.
 Request: 3000.0 kg to Moon using Falcon 9.
 
 ## Headline numbers
@@ -40,8 +40,9 @@ For ascent rows, duration is the modeled powered-burn time. For the transfer row
 **Recommendation:** Proceed with the mission as planned. The requested 3000.0 kg payload is fully feasible, well within the 4590 kg ceiling, with zero shortfall (0.0 kg / 0.0%). The available delta-v of 13269.5 m/s exceeds the required 12587.9 m/s by a margin of 681.6 m/s, and no additional propellant is needed (0.0 kg added).
 
 ## Assumptions and provenance
-- Request payload: 3,000 kg (PUBLISHED); source: 100 Kilograms
+- Request payload: 3,000 kg (PUBLISHED); source: 3,000 kg
 - WARNING: Payload was derived or flagged as ambiguous; verify the arithmetic and source quantity.
+- Target altitude: 200 km (PUBLISHED from request).
 - Rocket variant: ESTIMATED/UNSPECIFIED; no variant was supplied.
 - Published reference fields: {"leo_payload_kg": 22800}
 - Stage 1 `dry_mass_kg`: 25,600 (PUBLISHED); source: Empty mass	25,600 kg / 56,423 lb
@@ -55,3 +56,20 @@ For ascent rows, duration is the modeled powered-burn time. For the transfer row
 - Stage 2 `isp_vac_s`: 348 (PUBLISHED); source: Specific Impulse (vacuum)	348 sec
 - Stage 2 `thrust_vac_n`: 981,000 (PUBLISHED); source: Thrust	981 kN / 220,500 lbf
 - Model assumptions: {'losses_ms': 1500.0, 'v_target_ms': 7800.0, 's1_isp_mode': 'average', 'model': 'rocket equation minus fixed loss budget'}; Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled.
+
+
+## Novice notes: assumptions and glossary
+
+- **Payload assumption:** 3,000 kg, using 100 kg per person for 30 people. Cabin, life support, supplies, and other mission hardware are not included.
+- **Destination assumption:** the Moon-bound request is modeled as a transfer from the default 200 km parking orbit. It does not model lunar capture, landing, or a return mission.
+- **Plain-language result:** the model's payload ceiling is 4,590 kg. Compare it with the requested payload above; this simplified budget check is not proof that people could safely fly.
+
+| Term | Plain-language meaning |
+| --- | --- |
+| Payload | The mass being carried, excluding rocket stages; cabin and life-support mass would also need to be counted. |
+| Parking orbit | A temporary orbit around Earth before the next major burn. |
+| TLI | Trans-lunar injection: a burn intended to put a spacecraft on a path toward the Moon. |
+| Delta-v | A measure of how much a vehicle can change its velocity; it is a budget, not simply its final speed. |
+| Apogee | The highest point of an orbit. This pipeline does not calculate an apogee for this mission. |
+
+The model does not establish human-rating, life-support adequacy, launch licensing, lunar capture, landing, or crew return.

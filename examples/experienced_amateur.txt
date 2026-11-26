@@ -1,0 +1,9 @@
+# Persona: Experienced amateur — a model-rocket builder learning mission planning
+[MISSION REQUEST]
+Could Falcon 9 carry a 3,000 kg payload to the International Space Station (ISS), into a 400 km parking orbit? I have launched model rockets for years, but haven't worked through orbital rendezvous. Engage with the hobby details below, normalize the mixed units, and explain which metrics apply to this Falcon 9 calculation and which ISS-specific details the model leaves out.
+
+[MY MODEL-ROCKET EXPERIENCE]
+My own model rocket uses an E-class motor, has a pad mass of 4.5 lb, and has about 1.5 calibers of static stability margin from its fins. I usually launch from a site around 1,500 ft above sea level and want a parachute recovery inside 0.5 mile. I tend to judge a design by thrust-to-weight and apogee. Please explain where that intuition helps and where it stops carrying over to an orbital launch vehicle.
+
+[LIMITS]
+These hobby-rocket details describe a separate model rocket, not Falcon 9. Do not treat them as Falcon 9 inputs. If an apogee or hobby-rocket thrust-to-weight estimate cannot be supported by the information supplied, say what additional data would be needed rather than inventing a value.
