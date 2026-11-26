@@ -1,0 +1,351 @@
+{
+  "request": {
+    "payload_kg": 3000.0,
+    "payload_source_quote": "3,000 kg",
+    "payload_derived": true,
+    "destination": "ISS",
+    "vehicle_name": "Falcon 9",
+    "target_altitude_km": 400.0,
+    "missing_fields": [],
+    "ambiguities": [
+      "The request specifies both 'ISS' and 'a 400 km parking orbit' as the destination. These are treated as consistent (ISS orbits near 400 km), and ISS is used as the destination. If a standalone 400 km parking orbit (non-ISS rendezvous) was intended, the destination would differ operationally.",
+      "Hobby-rocket details (4.5 lb pad mass, E-class motor, 1.5-caliber stability margin, 1,500 ft launch site elevation, 0.5-mile recovery radius) are explicitly scoped to a separate model rocket and have been excluded from all Falcon 9 fields per the stated limits."
+    ]
+  },
+  "rocket": {
+    "name": "Falcon 9",
+    "variant": null,
+    "stages": [
+      {
+        "dry_mass_kg": {
+          "value": 25600.0,
+          "unit_as_written": "kg",
+          "source_quote": "Empty mass\t25,600 kg / 56,423 lb"
+        },
+        "propellant_mass_kg": {
+          "value": 395700.0,
+          "unit_as_written": "kg",
+          "source_quote": "Propellant mass\t395,700 kg/ 872,369 lb"
+        },
+        "isp_vac_s": {
+          "value": 312.0,
+          "unit_as_written": "sec.",
+          "source_quote": "Specific Impulse (vacuum sec)\t312 sec."
+        },
+        "isp_sl_s": {
+          "value": 283.0,
+          "unit_as_written": "sec.",
+          "source_quote": "Specific Impulse (sea-level)\t283 sec."
+        },
+        "thrust_vac_n": {
+          "value": 8227000.0,
+          "unit_as_written": "kN",
+          "source_quote": "Thrust in vacuum\t8,227 kN / 1,849,500 lbf"
+        },
+        "thrust_sl_n": {
+          "value": 7607000.0,
+          "unit_as_written": "kN",
+          "source_quote": "Thrust at sea Level\t7,607 kN / 1,710,000 lbf"
+        }
+      },
+      {
+        "dry_mass_kg": {
+          "value": 3900.0,
+          "unit_as_written": "kg",
+          "source_quote": "Empty mass\t3,900 kg / 8,598 lb"
+        },
+        "propellant_mass_kg": {
+          "value": 92670.0,
+          "unit_as_written": "kg",
+          "source_quote": "Propellant mass\t92,670 kg / 204,302 lb"
+        },
+        "isp_vac_s": {
+          "value": 348.0,
+          "unit_as_written": "sec",
+          "source_quote": "Specific Impulse (vacuum)\t348 sec"
+        },
+        "isp_sl_s": {
+          "value": null,
+          "unit_as_written": null,
+          "source_quote": null
+        },
+        "thrust_vac_n": {
+          "value": 981000.0,
+          "unit_as_written": "kN",
+          "source_quote": "Thrust\t981 kN / 220,500 lbf"
+        },
+        "thrust_sl_n": {
+          "value": null,
+          "unit_as_written": null,
+          "source_quote": null
+        }
+      }
+    ],
+    "published_reference": {
+      "leo_payload_kg": 22800
+    },
+    "ambiguities": [
+      "The specifications table in the document does not explicitly name a variant (e.g., Block 5 vs Full Thrust); the figures listed (e.g., first-stage sea-level thrust of 7,607 kN and LEO payload of 22,800 kg expendable) are consistent with the Block 5/Full Thrust generation but no variant label appears directly in the Specifications section header.",
+      "The second-stage 'Thrust' entry (981 kN) does not specify sea-level or vacuum; given it is a vacuum-only Merlin 1D Vacuum engine, it is recorded under thrust_vac_n, but the document only says 'Thrust' without qualification.",
+      "The second stage has no sea-level Isp or sea-level thrust listed, as it operates only in vacuum.",
+      "The LEO payload figure of 22,800 kg (expendable) is taken from the Block 5 / Full Thrust performance table; the document also lists \u226517,400 kg (reusable) for Block 5. Only the expendable figure is recorded in published_reference as it represents the maximum published capacity."
+    ]
+  },
+  "missing_fields": [],
+  "blocking_issues": [],
+  "agent": {
+    "status": "ok",
+    "verdict": "feasible",
+    "requested_payload_kg": 3000.0,
+    "as_requested_evaluation": {
+      "turn": 0,
+      "iteration": 0,
+      "event": "evaluation",
+      "candidate": {
+        "payload_kg": 3000.0,
+        "added_propellant_kg": [
+          0.0,
+          0.0
+        ]
+      },
+      "ascent": {
+        "payload_kg": 3000.0,
+        "reached_orbit": true,
+        "dv_total_ms": 13269.5,
+        "dv_needed_ms": 9300.0,
+        "margin_ms": 3969.5,
+        "liftoff_twr": 1.49,
+        "burn_table": [
+          {
+            "stage": 1,
+            "m0_kg": 520870,
+            "mf_kg": 125170,
+            "isp_used_s": 297.5,
+            "dv_ms": 4159.8
+          },
+          {
+            "stage": 2,
+            "m0_kg": 99570,
+            "mf_kg": 6900,
+            "isp_used_s": 348.0,
+            "dv_ms": 9109.7
+          }
+        ],
+        "assumptions": {
+          "losses_ms": 1500.0,
+          "v_target_ms": 7800.0,
+          "s1_isp_mode": "average",
+          "model": "rocket equation minus fixed loss budget"
+        }
+      },
+      "transfer": {
+        "destination": "ISS",
+        "parking_altitude_km": 400.0,
+        "status": "ok",
+        "dv_total_ms": 0.0,
+        "time_s": 0.0,
+        "burns": [],
+        "assumptions": "payload is already in the circular parking orbit; ISS altitude and 51.6-degree inclination/plane change are not modeled",
+        "feasible": true
+      },
+      "margin": {
+        "status": "ok",
+        "feasible": true,
+        "margin_ms": 3969.5,
+        "margin_pct": null,
+        "reserve_fraction": 0.05,
+        "transfer_dv_ms": 0.0,
+        "reserved_transfer_dv_ms": 0.0,
+        "propellant_needed_kg": 0.0,
+        "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+      }
+    },
+    "initial_candidate": {
+      "payload_kg": 3000.0,
+      "added_propellant_kg": [
+        0.0,
+        0.0
+      ]
+    },
+    "candidate": {
+      "payload_kg": 3000.0,
+      "added_propellant_kg": [
+        0.0,
+        0.0
+      ]
+    },
+    "ascent": {
+      "payload_kg": 3000.0,
+      "reached_orbit": true,
+      "dv_total_ms": 13269.5,
+      "dv_needed_ms": 9300.0,
+      "margin_ms": 3969.5,
+      "liftoff_twr": 1.49,
+      "burn_table": [
+        {
+          "stage": 1,
+          "m0_kg": 520870,
+          "mf_kg": 125170,
+          "isp_used_s": 297.5,
+          "dv_ms": 4159.8
+        },
+        {
+          "stage": 2,
+          "m0_kg": 99570,
+          "mf_kg": 6900,
+          "isp_used_s": 348.0,
+          "dv_ms": 9109.7
+        }
+      ],
+      "assumptions": {
+        "losses_ms": 1500.0,
+        "v_target_ms": 7800.0,
+        "s1_isp_mode": "average",
+        "model": "rocket equation minus fixed loss budget"
+      }
+    },
+    "transfer": {
+      "destination": "ISS",
+      "parking_altitude_km": 400.0,
+      "status": "ok",
+      "dv_total_ms": 0.0,
+      "time_s": 0.0,
+      "burns": [],
+      "assumptions": "payload is already in the circular parking orbit; ISS altitude and 51.6-degree inclination/plane change are not modeled",
+      "feasible": true
+    },
+    "margin": {
+      "status": "ok",
+      "feasible": true,
+      "margin_ms": 3969.5,
+      "margin_pct": null,
+      "reserve_fraction": 0.05,
+      "transfer_dv_ms": 0.0,
+      "reserved_transfer_dv_ms": 0.0,
+      "propellant_needed_kg": 0.0,
+      "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+    },
+    "history": [
+      {
+        "turn": 0,
+        "iteration": 0,
+        "event": "evaluation",
+        "candidate": {
+          "payload_kg": 3000.0,
+          "added_propellant_kg": [
+            0.0,
+            0.0
+          ]
+        },
+        "ascent": {
+          "payload_kg": 3000.0,
+          "reached_orbit": true,
+          "dv_total_ms": 13269.5,
+          "dv_needed_ms": 9300.0,
+          "margin_ms": 3969.5,
+          "liftoff_twr": 1.49,
+          "burn_table": [
+            {
+              "stage": 1,
+              "m0_kg": 520870,
+              "mf_kg": 125170,
+              "isp_used_s": 297.5,
+              "dv_ms": 4159.8
+            },
+            {
+              "stage": 2,
+              "m0_kg": 99570,
+              "mf_kg": 6900,
+              "isp_used_s": 348.0,
+              "dv_ms": 9109.7
+            }
+          ],
+          "assumptions": {
+            "losses_ms": 1500.0,
+            "v_target_ms": 7800.0,
+            "s1_isp_mode": "average",
+            "model": "rocket equation minus fixed loss budget"
+          }
+        },
+        "transfer": {
+          "destination": "ISS",
+          "parking_altitude_km": 400.0,
+          "status": "ok",
+          "dv_total_ms": 0.0,
+          "time_s": 0.0,
+          "burns": [],
+          "assumptions": "payload is already in the circular parking orbit; ISS altitude and 51.6-degree inclination/plane change are not modeled",
+          "feasible": true
+        },
+        "margin": {
+          "status": "ok",
+          "feasible": true,
+          "margin_ms": 3969.5,
+          "margin_pct": null,
+          "reserve_fraction": 0.05,
+          "transfer_dv_ms": 0.0,
+          "reserved_transfer_dv_ms": 0.0,
+          "propellant_needed_kg": 0.0,
+          "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+        }
+      },
+      {
+        "turn": 1,
+        "iteration": 0,
+        "event": "find_max_payload",
+        "candidate": {
+          "payload_kg": 3000.0,
+          "added_propellant_kg": [
+            0.0,
+            0.0
+          ]
+        },
+        "result": {
+          "max_payload_kg": 19920
+        }
+      },
+      {
+        "turn": 2,
+        "iteration": 0,
+        "event": "find_max_payload_stock",
+        "candidate": {
+          "payload_kg": 0.0,
+          "added_propellant_kg": [
+            0.0,
+            0.0
+          ]
+        },
+        "result": {
+          "max_payload_kg": 19920
+        }
+      }
+    ],
+    "facts": {
+      "verdict": "feasible",
+      "verdict_as_requested": "feasible",
+      "initial_verdict": "feasible",
+      "final_verdict": "feasible",
+      "requested_kg": 3000.0,
+      "ceiling_kg": 19920,
+      "ceiling_kg_stock": 19920,
+      "shortfall_kg": 0.0,
+      "shortfall_pct": 0.0,
+      "recommended_changes": {
+        "payload_kg": 3000.0,
+        "added_propellant_kg": [
+          0.0,
+          0.0
+        ]
+      },
+      "final_margin_ms": 3969.5,
+      "initial_margin_ms": 3969.5
+    },
+    "explanation": "Feasible as requested: 3000 kg closes.",
+    "termination_reason": "feasible_as_requested",
+    "iterations_requested": 5,
+    "iterations_used": 0,
+    "max_payload": {
+      "max_payload_kg": 19920
+    }
+  }
+}

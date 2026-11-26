@@ -1,0 +1,6 @@
+# Persona: Expert — an aerospace engineer specifying a screening case
+[MISSION REQUEST]
+Screen Falcon 9 for a 3,000 kg payload into a 200 km circular low Earth orbit (LEO). Assume nominal sequential staging and use the supplied vehicle data: stage 1 sea-level/vacuum Isp of 283/312 s and stage 2 vacuum Isp of 348 s. Use a 1,500 m/s ascent-loss budget. Report stage propellant mass fractions, a parameter and burn table, liftoff thrust-to-weight, required versus available ascent delta-v, the payload ceiling, and the resulting margin. My design target includes a 5% ascent delta-v reserve; state explicitly whether the repository model applies it. Include a small sensitivity sweep and identify relevant failure cases, distinguishing modeled results from unsupported fault analysis.
+
+[LIMITATIONS]
+Use the repository's Falcon 9 data and deterministic model only. This is a screening calculation, not a flight-design release; do not imply human-rating, lunar capture, landing, or crew-return capability.
