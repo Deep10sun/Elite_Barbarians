@@ -2,7 +2,7 @@
 
 ## Verdict
 **FEASIBLE**
-The mission is feasible: the 3000.0 kg payload is well within the 19920 kg ceiling, available delta-v of 13269.5 m/s exceeds the required 9300.0 m/s by a margin of 3969.5 m/s, with a shortfall of 0.0 kg.
+The mission is **FEASIBLE**: the vehicle's available delta-v of 13269.5 m/s exceeds the required 9300.0 m/s by a margin of 3969.5 m/s, and the 3000.0 kg payload is well within the 19920 kg maximum, with a shortfall of 0.0 kg.
 Request: 3000.0 kg to LEO using Falcon 9.
 
 ## Headline numbers
@@ -35,11 +35,10 @@ For ascent rows, duration is the modeled powered-burn time. For the transfer row
 ![delta_v.png](delta_v.png)
 
 ## Recommendation
-**Recommendation:** Proceed with the mission. The 3000.0 kg payload is well within the 19920 kg ceiling, the available delta-v of 13269.5 m/s comfortably exceeds the required 9300.0 m/s with a margin of 3969.5 m/s, and there is no propellant shortfall (0.0 kg / 0.0%). No changes to the payload or propellant are needed.
+**Recommendation:** Proceed with the launch. The mission is feasible — the requested payload of 3000.0 kg falls well within the maximum capacity of 19920 kg, the available delta-v of 13269.5 m/s comfortably exceeds the required 9300.0 m/s leaving a margin of 3969.5 m/s, and there is zero propellant shortfall (0.0 kg / 0.0%), so no configuration changes are needed.
 
 ## Assumptions and provenance
 - Request payload: 3,000 kg (PUBLISHED); source: 3,000 kg
-- WARNING: Payload was derived or flagged as ambiguous; verify the arithmetic and source quantity.
 - Target altitude: 200 km (PUBLISHED from request).
 - Rocket variant: ESTIMATED/UNSPECIFIED; no variant was supplied.
 - Published reference fields: {"leo_payload_kg": 22800}

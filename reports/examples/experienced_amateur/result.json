@@ -8,8 +8,9 @@
     "target_altitude_km": 400.0,
     "missing_fields": [],
     "ambiguities": [
-      "The request specifies both 'ISS' and 'a 400 km parking orbit' as the destination. These are treated as consistent (ISS orbits near 400 km), and ISS is used as the destination. If a standalone 400 km parking orbit (non-ISS rendezvous) was intended, the destination would differ operationally.",
-      "Hobby-rocket details (4.5 lb pad mass, E-class motor, 1.5-caliber stability margin, 1,500 ft launch site elevation, 0.5-mile recovery radius) are explicitly scoped to a separate model rocket and have been excluded from all Falcon 9 fields per the stated limits."
+      "The request describes a '400 km parking orbit' alongside 'International Space Station (ISS)' as if they are the same destination; ISS orbital parameters are set by the station's actual current orbit and are not fully defined by the 400 km figure alone. The 400 km value has been recorded as stated, but it may not match the ISS inclination or precise altitude at the time of any real mission.",
+      "The hobby-rocket details (pad mass of 4.5 lb, E-class motor, 1,500 ft launch site elevation, stability margin, parachute recovery radius) are explicitly scoped to a separate model rocket and have been excluded from all JSON fields per the stated limits.",
+      "No apogee or thrust-to-weight value for the model rocket can be derived from the information supplied; motor thrust curve data and rocket aerodynamic coefficients would be needed to compute those figures."
     ]
   },
   "rocket": {
@@ -85,10 +86,10 @@
       "leo_payload_kg": 22800
     },
     "ambiguities": [
-      "The specifications table in the document does not explicitly name a variant (e.g., Block 5 vs Full Thrust); the figures listed (e.g., first-stage sea-level thrust of 7,607 kN and LEO payload of 22,800 kg expendable) are consistent with the Block 5/Full Thrust generation but no variant label appears directly in the Specifications section header.",
-      "The second-stage 'Thrust' entry (981 kN) does not specify sea-level or vacuum; given it is a vacuum-only Merlin 1D Vacuum engine, it is recorded under thrust_vac_n, but the document only says 'Thrust' without qualification.",
-      "The second stage has no sea-level Isp or sea-level thrust listed, as it operates only in vacuum.",
-      "The LEO payload figure of 22,800 kg (expendable) is taken from the Block 5 / Full Thrust performance table; the document also lists \u226517,400 kg (reusable) for Block 5. Only the expendable figure is recorded in published_reference as it represents the maximum published capacity."
+      "The document describes multiple Falcon 9 variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was requested, so the main 'Specifications' table was used, which appears to correspond to the current Block 5 configuration based on context.",
+      "The second-stage 'Thrust' value of 981 kN is listed without specifying sea-level or vacuum; however, since the second stage uses a vacuum-optimized Merlin 1D Vacuum engine and the engine section header says '1 vacuum', this has been placed in thrust_vac_n. Sea-level thrust for the second stage is not stated.",
+      "LEO payload capacity of 22,800 kg is listed as 'expendable' for Block 5; a reusable figure of \u226517,400 kg is also given. The expendable figure was used in published_reference.",
+      "The Specifications table's first-stage Isp and thrust values may correspond to Block 5, but the document does not explicitly label the Specifications section as Block 5; this is inferred from context."
     ]
   },
   "missing_fields": [],

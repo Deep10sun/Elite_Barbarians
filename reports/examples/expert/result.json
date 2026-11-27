@@ -2,15 +2,15 @@
   "request": {
     "payload_kg": 3000.0,
     "payload_source_quote": "3,000 kg",
-    "payload_derived": true,
+    "payload_derived": false,
     "destination": "LEO",
     "vehicle_name": "Falcon 9",
     "target_altitude_km": 200.0,
     "missing_fields": [],
     "ambiguities": [
-      "Request includes detailed engineering parameters (Isp values, ascent-loss budget, staging assumptions, delta-v reserve, sensitivity sweep, failure cases) that go beyond the scope of this parser; only mission-definition fields are extracted.",
-      "No explicit payload unit qualifier beyond 'kg' was needed; conversion is 1:1.",
-      "Orbit specified as '200 km circular low Earth orbit (LEO)'; destination set to LEO and target_altitude_km set to 200."
+      "Request includes detailed engineering parameters (Isp values, ascent-loss budget, delta-v reserve, staging analysis, sensitivity sweep, failure cases) that are outside the scope of this parser and cannot be represented in the output schema.",
+      "Vehicle name 'Falcon 9' is extracted exactly as stated, but no specific variant (Block 5, etc.) is specified.",
+      "The request references 'the repository model' and 'supplied vehicle data'; it is ambiguous whether 'repository' refers to an internal document store or a public source \u2014 no data has been ingested by this parser."
     ]
   },
   "rocket": {
@@ -30,12 +30,12 @@
         },
         "isp_vac_s": {
           "value": 312.0,
-          "unit_as_written": "sec.",
+          "unit_as_written": "sec",
           "source_quote": "Specific Impulse (vacuum sec)\t312 sec."
         },
         "isp_sl_s": {
           "value": 283.0,
-          "unit_as_written": "sec.",
+          "unit_as_written": "sec",
           "source_quote": "Specific Impulse (sea-level)\t283 sec."
         },
         "thrust_vac_n": {
@@ -86,10 +86,10 @@
       "leo_payload_kg": 22800
     },
     "ambiguities": [
-      "The specifications table in the document does not explicitly name a variant (e.g., Block 5 vs Full Thrust); the figures listed (e.g., first-stage sea-level thrust of 7,607 kN and LEO payload of 22,800 kg expendable) are consistent with the Block 5/Full Thrust generation but no variant label appears directly in the Specifications section header.",
-      "The second-stage 'Thrust' entry (981 kN) does not specify sea-level or vacuum; given it is a vacuum-only Merlin 1D Vacuum engine, it is recorded under thrust_vac_n, but the document only says 'Thrust' without qualification.",
-      "The second stage has no sea-level Isp or sea-level thrust listed, as it operates only in vacuum.",
-      "The LEO payload figure of 22,800 kg (expendable) is taken from the Block 5 / Full Thrust performance table; the document also lists \u226517,400 kg (reusable) for Block 5. Only the expendable figure is recorded in published_reference as it represents the maximum published capacity."
+      "No specific variant was named in the user message. The specifications table in the document appears to describe the current/Block 5 version based on context, but the table header does not explicitly label which variant the first/second stage mass and Isp figures apply to.",
+      "The second stage thrust is listed simply as 'Thrust' with no explicit sea-level or vacuum qualifier. However, since the second stage uses a vacuum-optimized Merlin 1D Vacuum engine, it has been placed in thrust_vac_n, but the document does not explicitly state 'vacuum' for this value.",
+      "The second stage has no sea-level Isp listed; the document only provides a vacuum Isp for the second stage.",
+      "LEO payload figure of 22,800 kg is for the expendable configuration from Cape Canaveral; the reusable figure is listed as \u226517,400 kg. Only the expendable figure has been recorded in published_reference."
     ]
   },
   "missing_fields": [],
