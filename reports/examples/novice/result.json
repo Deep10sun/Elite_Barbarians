@@ -1,18 +1,18 @@
 {
   "request": {
-    "payload_kg": 3000.0,
-    "payload_source_quote": "3,000 kg",
+    "payload_kg": 90718.474,
+    "payload_source_quote": "200,000 pounds",
     "payload_derived": true,
     "destination": "Moon",
     "vehicle_name": "Falcon 9",
-    "target_altitude_km": 200.0,
+    "target_altitude_km": null,
     "missing_fields": [],
     "ambiguities": [
-      "Payload mass was not stated in the request; the value of 3,000 kg (30 \u00d7 100 kg per person) is a demo-only screening assumption, not a fact from the user.",
-      "The 200 km parking orbit altitude is a demo-only screening assumption, not stated in the request.",
-      "No spacecraft, cabin, life-support system, or other hardware mass is included in the payload per the demo defaults; real crewed lunar missions would require substantial additional mass.",
-      "The exact trajectory profile (e.g., direct ascent, trans-lunar injection via parking orbit, lunar orbit insertion) is unspecified; 'points at the Moon and flies there' is not a defined flight profile.",
-      "It is unclear whether 'a trip to the Moon' means lunar flyby, lunar orbit, or lunar surface landing, which would significantly affect delta-v and mass requirements."
+      "The injected DEMO-ONLY DEFAULTS specify a 3,000 kg payload (30 people at 100 kg each) and a 200 km parking orbit, but no people or parking orbit are mentioned in the actual user request. Per parser rules, only facts stated in the request are used; the demo defaults are ignored and the stated house mass of 200,000 lbs (90,718.474 kg) is used instead.",
+      "No target altitude to or around the Moon is specified; target_altitude_km is set to null.",
+      "The user describes an imprecise trajectory ('the rocket just points at the Moon and flies there'); the intended lunar trajectory type (direct ascent, TLI, lunar orbit insertion, surface landing, etc.) is not stated.",
+      "It is unclear whether '200,000 pounds' refers to the house structure alone or includes contents, foundation, or other attached mass.",
+      "The request asks for an explanation in everyday language, which is outside the scope of this parser; no feasibility judgment or narrative output is produced here."
     ]
   },
   "rocket": {
@@ -88,50 +88,50 @@
       "leo_payload_kg": 22800
     },
     "ambiguities": [
-      "The specifications table in the document does not explicitly name a variant (e.g., Block 5 vs Full Thrust); the figures listed (e.g., first-stage sea-level thrust of 7,607 kN and LEO payload of 22,800 kg expendable) are consistent with the Block 5/Full Thrust generation but no variant label appears directly in the Specifications section header.",
-      "The second-stage 'Thrust' entry (981 kN) does not specify sea-level or vacuum; given it is a vacuum-only Merlin 1D Vacuum engine, it is recorded under thrust_vac_n, but the document only says 'Thrust' without qualification.",
-      "The second stage has no sea-level Isp or sea-level thrust listed, as it operates only in vacuum.",
-      "The LEO payload figure of 22,800 kg (expendable) is taken from the Block 5 / Full Thrust performance table; the document also lists \u226517,400 kg (reusable) for Block 5. Only the expendable figure is recorded in published_reference as it represents the maximum published capacity."
+      "The document describes multiple Falcon 9 variants (v1.0, v1.1, Full Thrust/Block 3, Block 4, Block 5). No specific variant was requested, so the main 'Specifications' table was used, which appears to correspond to the current Block 5 configuration based on context.",
+      "The second-stage 'Thrust' value of 981 kN is listed without specifying sea-level or vacuum; however, since the second stage uses a vacuum-optimized Merlin 1D Vacuum engine and the engine section header says '1 vacuum', this has been placed in thrust_vac_n. Sea-level thrust for the second stage is not stated.",
+      "LEO payload capacity of 22,800 kg is listed as 'expendable' for Block 5; a reusable figure of \u226517,400 kg is also given. The expendable figure was used in published_reference.",
+      "The Specifications table's first-stage Isp and thrust values may correspond to Block 5, but the document does not explicitly label the Specifications section as Block 5; this is inferred from context."
     ]
   },
   "missing_fields": [],
   "blocking_issues": [],
   "agent": {
     "status": "ok",
-    "verdict": "feasible",
-    "requested_payload_kg": 3000.0,
+    "verdict": "infeasible_as_requested",
+    "requested_payload_kg": 90718.474,
     "as_requested_evaluation": {
       "turn": 0,
       "iteration": 0,
       "event": "evaluation",
       "candidate": {
-        "payload_kg": 3000.0,
+        "payload_kg": 90718.474,
         "added_propellant_kg": [
           0.0,
           0.0
         ]
       },
       "ascent": {
-        "payload_kg": 3000.0,
-        "reached_orbit": true,
-        "dv_total_ms": 13269.5,
+        "payload_kg": 90718.474,
+        "reached_orbit": false,
+        "dv_total_ms": 5394.6,
         "dv_needed_ms": 9300.0,
-        "margin_ms": 3969.5,
-        "liftoff_twr": 1.49,
+        "margin_ms": -3905.4,
+        "liftoff_twr": 1.27,
         "burn_table": [
           {
             "stage": 1,
-            "m0_kg": 520870,
-            "mf_kg": 125170,
+            "m0_kg": 608588,
+            "mf_kg": 212888,
             "isp_used_s": 297.5,
-            "dv_ms": 4159.8
+            "dv_ms": 3064.4
           },
           {
             "stage": 2,
-            "m0_kg": 99570,
-            "mf_kg": 6900,
+            "m0_kg": 187288,
+            "mf_kg": 94618,
             "isp_used_s": 348.0,
-            "dv_ms": 9109.7
+            "dv_ms": 2330.2
           }
         ],
         "assumptions": {
@@ -155,55 +155,55 @@
         ],
         "arrival_speed_ms": 186.7959331956984,
         "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
-        "feasible": true
+        "feasible": false
       },
       "margin": {
         "status": "ok",
-        "feasible": true,
-        "margin_ms": 681.6,
-        "margin_pct": 20.73,
+        "feasible": false,
+        "margin_ms": -7193.3,
+        "margin_pct": -218.78,
         "reserve_fraction": 0.05,
         "transfer_dv_ms": 3131.3,
         "reserved_transfer_dv_ms": 3287.9,
-        "propellant_needed_kg": 0.0,
+        "propellant_needed_kg": 164531.9,
         "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
       }
     },
     "initial_candidate": {
-      "payload_kg": 3000.0,
+      "payload_kg": 90718.474,
       "added_propellant_kg": [
         0.0,
         0.0
       ]
     },
     "candidate": {
-      "payload_kg": 3000.0,
+      "payload_kg": 5624.0,
       "added_propellant_kg": [
-        0.0,
-        0.0
+        59355.0,
+        13900.5
       ]
     },
     "ascent": {
-      "payload_kg": 3000.0,
+      "payload_kg": 5624.0,
       "reached_orbit": true,
-      "dv_total_ms": 13269.5,
+      "dv_total_ms": 12588.0,
       "dv_needed_ms": 9300.0,
-      "margin_ms": 3969.5,
-      "liftoff_twr": 1.49,
+      "margin_ms": 3288.0,
+      "liftoff_twr": 1.3,
       "burn_table": [
         {
           "stage": 1,
-          "m0_kg": 520870,
-          "mf_kg": 125170,
+          "m0_kg": 598581,
+          "mf_kg": 143526,
           "isp_used_s": 297.5,
-          "dv_ms": 4159.8
+          "dv_ms": 4166.3
         },
         {
           "stage": 2,
-          "m0_kg": 99570,
-          "mf_kg": 6900,
+          "m0_kg": 116442,
+          "mf_kg": 9872,
           "isp_used_s": 348.0,
-          "dv_ms": 9109.7
+          "dv_ms": 8421.7
         }
       ],
       "assumptions": {
@@ -232,8 +232,8 @@
     "margin": {
       "status": "ok",
       "feasible": true,
-      "margin_ms": 681.6,
-      "margin_pct": 20.73,
+      "margin_ms": 0.1,
+      "margin_pct": 0.0,
       "reserve_fraction": 0.05,
       "transfer_dv_ms": 3131.3,
       "reserved_transfer_dv_ms": 3287.9,
@@ -246,33 +246,354 @@
         "iteration": 0,
         "event": "evaluation",
         "candidate": {
-          "payload_kg": 3000.0,
+          "payload_kg": 90718.474,
           "added_propellant_kg": [
             0.0,
             0.0
           ]
         },
         "ascent": {
-          "payload_kg": 3000.0,
-          "reached_orbit": true,
-          "dv_total_ms": 13269.5,
+          "payload_kg": 90718.474,
+          "reached_orbit": false,
+          "dv_total_ms": 5394.6,
           "dv_needed_ms": 9300.0,
-          "margin_ms": 3969.5,
-          "liftoff_twr": 1.49,
+          "margin_ms": -3905.4,
+          "liftoff_twr": 1.27,
           "burn_table": [
             {
               "stage": 1,
-              "m0_kg": 520870,
-              "mf_kg": 125170,
+              "m0_kg": 608588,
+              "mf_kg": 212888,
               "isp_used_s": 297.5,
-              "dv_ms": 4159.8
+              "dv_ms": 3064.4
             },
             {
               "stage": 2,
-              "m0_kg": 99570,
-              "mf_kg": 6900,
+              "m0_kg": 187288,
+              "mf_kg": 94618,
               "isp_used_s": 348.0,
-              "dv_ms": 9109.7
+              "dv_ms": 2330.2
+            }
+          ],
+          "assumptions": {
+            "losses_ms": 1500.0,
+            "v_target_ms": 7800.0,
+            "s1_isp_mode": "average",
+            "model": "rocket equation minus fixed loss budget"
+          }
+        },
+        "transfer": {
+          "destination": "Moon",
+          "parking_altitude_km": 200.0,
+          "status": "ok",
+          "dv_total_ms": 3131.345,
+          "time_s": 430095.304,
+          "burns": [
+            {
+              "name": "trans-lunar injection",
+              "dv_ms": 3131.345
+            }
+          ],
+          "arrival_speed_ms": 186.7959331956984,
+          "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
+          "feasible": false
+        },
+        "margin": {
+          "status": "ok",
+          "feasible": false,
+          "margin_ms": -7193.3,
+          "margin_pct": -218.78,
+          "reserve_fraction": 0.05,
+          "transfer_dv_ms": 3131.3,
+          "reserved_transfer_dv_ms": 3287.9,
+          "propellant_needed_kg": 164531.9,
+          "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+        }
+      },
+      {
+        "turn": 1,
+        "iteration": 0,
+        "event": "decision",
+        "action": "revise",
+        "explanation": "The mission is deeply infeasible (margin_ms = -7193.3). Strategy step 1: try adding stage 1's full remaining propellant cap (59355.0 kg, copied from revision_limits) to improve delta-v before touching stage 2 or payload."
+      },
+      {
+        "turn": 2,
+        "iteration": 0,
+        "event": "revision",
+        "change": {
+          "add_propellant_kg": 59355.0,
+          "stage": 1
+        },
+        "revision": {
+          "status": "ok",
+          "applied": {
+            "payload_kg": 90718.474,
+            "added_prop_kg": [
+              59355.0,
+              0.0
+            ],
+            "struct_penalty_kg_per_kg": 0.025
+          }
+        }
+      },
+      {
+        "turn": 3,
+        "iteration": 1,
+        "event": "evaluation",
+        "candidate": {
+          "payload_kg": 90718.474,
+          "added_propellant_kg": [
+            59355.0,
+            0.0
+          ]
+        },
+        "ascent": {
+          "payload_kg": 90718.474,
+          "reached_orbit": false,
+          "dv_total_ms": 5652.3,
+          "dv_needed_ms": 9300.0,
+          "margin_ms": -3647.7,
+          "liftoff_twr": 1.16,
+          "burn_table": [
+            {
+              "stage": 1,
+              "m0_kg": 669427,
+              "mf_kg": 214372,
+              "isp_used_s": 297.5,
+              "dv_ms": 3322.2
+            },
+            {
+              "stage": 2,
+              "m0_kg": 187288,
+              "mf_kg": 94618,
+              "isp_used_s": 348.0,
+              "dv_ms": 2330.2
+            }
+          ],
+          "assumptions": {
+            "losses_ms": 1500.0,
+            "v_target_ms": 7800.0,
+            "s1_isp_mode": "average",
+            "model": "rocket equation minus fixed loss budget"
+          }
+        },
+        "transfer": {
+          "destination": "Moon",
+          "parking_altitude_km": 200.0,
+          "status": "ok",
+          "dv_total_ms": 3131.345,
+          "time_s": 430095.304,
+          "burns": [
+            {
+              "name": "trans-lunar injection",
+              "dv_ms": 3131.345
+            }
+          ],
+          "arrival_speed_ms": 186.7959331956984,
+          "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
+          "feasible": false
+        },
+        "margin": {
+          "status": "ok",
+          "feasible": false,
+          "margin_ms": -6935.6,
+          "margin_pct": -210.94,
+          "reserve_fraction": 0.05,
+          "transfer_dv_ms": 3131.3,
+          "reserved_transfer_dv_ms": 3287.9,
+          "propellant_needed_kg": 162747.0,
+          "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+        }
+      },
+      {
+        "turn": 4,
+        "iteration": 1,
+        "event": "decision",
+        "action": "revise",
+        "explanation": "Stage 1 cap is now exhausted (0.0 remaining). Adding stage 2's full remaining cap of 13900.5 kg (copied from revision_limits) to improve margin_ms, which improved from -7193.3 to -6935.6 after the stage 1 addition, confirming propellant additions are helping."
+      },
+      {
+        "turn": 5,
+        "iteration": 1,
+        "event": "revision",
+        "change": {
+          "add_propellant_kg": 13900.5,
+          "stage": 2
+        },
+        "revision": {
+          "status": "ok",
+          "applied": {
+            "payload_kg": 90718.474,
+            "added_prop_kg": [
+              59355.0,
+              13900.5
+            ],
+            "struct_penalty_kg_per_kg": 0.025
+          }
+        }
+      },
+      {
+        "turn": 6,
+        "iteration": 2,
+        "event": "evaluation",
+        "candidate": {
+          "payload_kg": 90718.474,
+          "added_propellant_kg": [
+            59355.0,
+            13900.5
+          ]
+        },
+        "ascent": {
+          "payload_kg": 90718.474,
+          "reached_orbit": false,
+          "dv_total_ms": 5763.8,
+          "dv_needed_ms": 9300.0,
+          "margin_ms": -3536.2,
+          "liftoff_twr": 1.13,
+          "burn_table": [
+            {
+              "stage": 1,
+              "m0_kg": 683675,
+              "mf_kg": 228620,
+              "isp_used_s": 297.5,
+              "dv_ms": 3195.9
+            },
+            {
+              "stage": 2,
+              "m0_kg": 201536,
+              "mf_kg": 94966,
+              "isp_used_s": 348.0,
+              "dv_ms": 2567.9
+            }
+          ],
+          "assumptions": {
+            "losses_ms": 1500.0,
+            "v_target_ms": 7800.0,
+            "s1_isp_mode": "average",
+            "model": "rocket equation minus fixed loss budget"
+          }
+        },
+        "transfer": {
+          "destination": "Moon",
+          "parking_altitude_km": 200.0,
+          "status": "ok",
+          "dv_total_ms": 3131.345,
+          "time_s": 430095.304,
+          "burns": [
+            {
+              "name": "trans-lunar injection",
+              "dv_ms": 3131.345
+            }
+          ],
+          "arrival_speed_ms": 186.7959331956984,
+          "assumptions": "Hohmann-to-lunar-distance estimate using Earth gravity only; TLI excludes lunar orbit insertion; lunar capture is not modeled",
+          "feasible": false
+        },
+        "margin": {
+          "status": "ok",
+          "feasible": false,
+          "margin_ms": -6824.1,
+          "margin_pct": -207.55,
+          "reserve_fraction": 0.05,
+          "transfer_dv_ms": 3131.3,
+          "reserved_transfer_dv_ms": 3287.9,
+          "propellant_needed_kg": 174251.0,
+          "assumptions": "transfer reserve is a fixed fraction; propellant equivalent uses the inverse rocket equation and stage 2 Isp"
+        }
+      },
+      {
+        "turn": 7,
+        "iteration": 2,
+        "event": "decision",
+        "action": "find_max_payload",
+        "explanation": "Both stages now have 0.0 remaining propellant cap (revision_limits shows [0.0, 0.0]) and the mission remains infeasible at margin_ms = -6824.1. Per strategy step 3, with no propellant headroom left, I must call find_max_payload to determine the payload ceiling for this vehicle configuration."
+      },
+      {
+        "turn": 8,
+        "iteration": 2,
+        "event": "find_max_payload",
+        "candidate": {
+          "payload_kg": 90718.474,
+          "added_propellant_kg": [
+            59355.0,
+            13900.5
+          ]
+        },
+        "result": {
+          "max_payload_kg": 5624
+        }
+      },
+      {
+        "turn": 9,
+        "iteration": 3,
+        "event": "evaluation_cached",
+        "candidate": {
+          "payload_kg": 90718.474,
+          "added_propellant_kg": [
+            59355.0,
+            13900.5
+          ]
+        }
+      },
+      {
+        "turn": 10,
+        "iteration": 3,
+        "event": "decision",
+        "action": "revise",
+        "explanation": "Both propellant caps are exhausted (revision_limits shows [0.0, 0.0]) and the mission remains infeasible at margin_ms = -6824.1. The find_max_payload call returned max_payload_kg = 5624. Per strategy step 4, I now revise payload_kg down to that ceiling."
+      },
+      {
+        "turn": 11,
+        "iteration": 3,
+        "event": "revision",
+        "change": {
+          "payload_kg": 5624
+        },
+        "revision": {
+          "status": "ok",
+          "applied": {
+            "payload_kg": 5624.0,
+            "added_prop_kg": [
+              59355.0,
+              13900.5
+            ],
+            "struct_penalty_kg_per_kg": 0.025
+          }
+        }
+      },
+      {
+        "turn": 12,
+        "iteration": 4,
+        "event": "evaluation",
+        "candidate": {
+          "payload_kg": 5624.0,
+          "added_propellant_kg": [
+            59355.0,
+            13900.5
+          ]
+        },
+        "ascent": {
+          "payload_kg": 5624.0,
+          "reached_orbit": true,
+          "dv_total_ms": 12588.0,
+          "dv_needed_ms": 9300.0,
+          "margin_ms": 3288.0,
+          "liftoff_twr": 1.3,
+          "burn_table": [
+            {
+              "stage": 1,
+              "m0_kg": 598581,
+              "mf_kg": 143526,
+              "isp_used_s": 297.5,
+              "dv_ms": 4166.3
+            },
+            {
+              "stage": 2,
+              "m0_kg": 116442,
+              "mf_kg": 9872,
+              "isp_used_s": 348.0,
+              "dv_ms": 8421.7
             }
           ],
           "assumptions": {
@@ -301,8 +622,8 @@
         "margin": {
           "status": "ok",
           "feasible": true,
-          "margin_ms": 681.6,
-          "margin_pct": 20.73,
+          "margin_ms": 0.1,
+          "margin_pct": 0.0,
           "reserve_fraction": 0.05,
           "transfer_dv_ms": 3131.3,
           "reserved_transfer_dv_ms": 3287.9,
@@ -311,23 +632,23 @@
         }
       },
       {
-        "turn": 1,
-        "iteration": 0,
+        "turn": 13,
+        "iteration": 4,
         "event": "find_max_payload",
         "candidate": {
-          "payload_kg": 3000.0,
+          "payload_kg": 5624.0,
           "added_propellant_kg": [
-            0.0,
-            0.0
+            59355.0,
+            13900.5
           ]
         },
         "result": {
-          "max_payload_kg": 4590
+          "max_payload_kg": 5624
         }
       },
       {
-        "turn": 2,
-        "iteration": 0,
+        "turn": 14,
+        "iteration": 4,
         "event": "find_max_payload_stock",
         "candidate": {
           "payload_kg": 0.0,
@@ -342,31 +663,31 @@
       }
     ],
     "facts": {
-      "verdict": "feasible",
-      "verdict_as_requested": "feasible",
-      "initial_verdict": "feasible",
+      "verdict": "infeasible_as_requested",
+      "verdict_as_requested": "infeasible",
+      "initial_verdict": "infeasible",
       "final_verdict": "feasible",
-      "requested_kg": 3000.0,
-      "ceiling_kg": 4590,
+      "requested_kg": 90718.474,
+      "ceiling_kg": 5624,
       "ceiling_kg_stock": 4590,
-      "shortfall_kg": 0.0,
-      "shortfall_pct": 0.0,
+      "shortfall_kg": 85094.474,
+      "shortfall_pct": 93.8,
       "recommended_changes": {
-        "payload_kg": 3000.0,
+        "payload_kg": 5624.0,
         "added_propellant_kg": [
-          0.0,
-          0.0
+          59355.0,
+          13900.5
         ]
       },
-      "final_margin_ms": 681.6,
-      "initial_margin_ms": 681.6
+      "final_margin_ms": 0.1,
+      "initial_margin_ms": -7193.3
     },
-    "explanation": "Feasible as requested: 3000 kg closes.",
-    "termination_reason": "feasible_as_requested",
+    "explanation": "Not feasible as requested: 90718.5 kg exceeds the ceiling of 5624 kg by 85094.5 kg (93.8%). Feasible at 5624 kg with +59355 kg stage 1 propellant and +13900.5 kg stage 2 propellant.",
+    "termination_reason": "feasible_after_revision",
     "iterations_requested": 5,
-    "iterations_used": 0,
+    "iterations_used": 4,
     "max_payload": {
-      "max_payload_kg": 4590
+      "max_payload_kg": 5624
     }
   }
 }

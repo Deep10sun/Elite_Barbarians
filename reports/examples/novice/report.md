@@ -1,33 +1,33 @@
 # Mission report
 
 ## Verdict
-**FEASIBLE**
-The mission is **feasible**, delivering a 3000.0 kg payload with 13269.5 m/s available delta-v against a 12587.9 m/s requirement, leaving a margin of 681.6 m/s and a shortfall of 0.0 kg.
-Request: 3000.0 kg to Moon using Falcon 9.
+**NOT FEASIBLE AS REQUESTED**
+The mission is infeasible as requested, with the vehicle's maximum payload of 5624 kg falling 85094.474 kg (93.8%) short of the requested 90718.474 kg.
+Request: 90718.474 kg to Moon using Falcon 9.
 
 ## Headline numbers
-- Payload requested: 3,000 kg
-- Maximum payload that closes the budget: 4,590 kg
+- Payload requested: 90,718.5 kg
+- Maximum payload that closes the budget: 5,624 kg
 - Stock rocket maximum payload (zero added propellant): 4,590 kg
-- Shortfall: 0 kg (0%)
+- Shortfall: 85,094.5 kg (93.8%)
 - Propellant margin: 0 kg (0%)
-- Delta-v required vs. available: 12,587.9 m/s vs. 13,269.5 m/s
+- Delta-v required vs. available: 12,587.9 m/s vs. 12,588 m/s
 
 
 ## Benchmark comparison
 
 | Method | Verdict correct | Mean ceiling error | Mean shortfall error | Missing fields correct | Errors |
 |---|---:|---:|---:|---:|---:|
-| full_agent | 1/1 | 0.0 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
-| llm_only | 1/1 | 16810.0 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
-| rule_based | 1/1 | 0.0 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
+| full_agent | 1/1 | 0.0 kg (n=1) | 1034.0 kg (n=1) | 0/0 | 0 |
+| llm_only | 1/1 | 16810.0 kg (n=1) | 15776.0 kg (n=1) | 0/0 | 0 |
+| rule_based | 1/1 | 0.0 kg (n=1) | 1034.0 kg (n=1) | 0/0 | 0 |
 
 ## Burn table
 | Stage | Burn / coast | Start (s) | Duration / travel (s) | Delta-v (m/s) | Propellant (kg) | Mass before (kg) | Mass after (kg) |
 |---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Stage 1 ascent | 0 | 151.8 | 4,159.8 | 395,700 | 520,870 | 125,170 |
-| 2 | Stage 2 ascent | 151.8 | 322.4 | 9,109.7 | 92,670 | 99,570 | 6,900 |
-| transfer | trans-lunar injection | 474.1 | 430,095.3 | 3,131.3 | — | — | — |
+| 1 | Stage 1 ascent | 0 | 174.5 | 4,166.3 | 455,055 | 598,581 | 143,526 |
+| 2 | Stage 2 ascent | 174.5 | 370.7 | 8,421.7 | 106,570 | 116,442 | 9,872 |
+| transfer | trans-lunar injection | 545.3 | 430,095.3 | 3,131.3 | — | — | — |
 
 For ascent rows, duration is the modeled powered-burn time. For the transfer row, duration is the modeled coast/travel time; propellant and mass fields are not supplied by the transfer model.
 
@@ -36,13 +36,19 @@ For ascent rows, duration is the modeled powered-burn time. For the transfer row
 ![propellant.png](propellant.png)
 ![delta_v.png](delta_v.png)
 
+## Revision history
+| Change | Why | Outcome |
+|---|---|---|
+| {"add_propellant_kg": 59355.0, "stage": 1} | agent revision | ok |
+| {"add_propellant_kg": 13900.5, "stage": 2} | agent revision | ok |
+| {"payload_kg": 5624} | agent revision | ok |
+
 ## Recommendation
-**Recommendation:** Proceed with the mission as planned. The requested 3000.0 kg payload is fully feasible, well within the 4590 kg ceiling, with zero shortfall (0.0 kg / 0.0%). The available delta-v of 13269.5 m/s exceeds the required 12587.9 m/s by a margin of 681.6 m/s, and no additional propellant is needed (0.0 kg added).
+Reduce the payload to about 5,624 kg or increase available propellant; the requested 90,718.5 kg exceeds the transfer-aware ceiling.
 
 ## Assumptions and provenance
-- Request payload: 3,000 kg (PUBLISHED); source: 3,000 kg
+- Request payload: 90,718.5 kg (PUBLISHED); source: 200,000 pounds
 - WARNING: Payload was derived or flagged as ambiguous; verify the arithmetic and source quantity.
-- Target altitude: 200 km (PUBLISHED from request).
 - Rocket variant: ESTIMATED/UNSPECIFIED; no variant was supplied.
 - Published reference fields: {"leo_payload_kg": 22800}
 - Stage 1 `dry_mass_kg`: 25,600 (PUBLISHED); source: Empty mass	25,600 kg / 56,423 lb
@@ -60,9 +66,9 @@ For ascent rows, duration is the modeled powered-burn time. For the transfer row
 
 ## Novice notes: assumptions and glossary
 
-- **Payload assumption:** 3,000 kg, using 100 kg per person for 30 people. Cabin, life support, supplies, and other mission hardware are not included.
+- **Payload assumption:** 90,718 kg, using 100 kg per person for 30 people. Cabin, life support, supplies, and other mission hardware are not included.
 - **Destination assumption:** the Moon-bound request is modeled as a transfer from the default 200 km parking orbit. It does not model lunar capture, landing, or a return mission.
-- **Plain-language result:** the model's payload ceiling is 4,590 kg. Compare it with the requested payload above; this simplified budget check is not proof that people could safely fly.
+- **Plain-language result:** the model's payload ceiling is 5,624 kg. Compare it with the requested payload above; this simplified budget check is not proof that people could safely fly.
 
 | Term | Plain-language meaning |
 | --- | --- |

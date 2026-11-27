@@ -2,7 +2,7 @@
 
 ## Verdict
 **FEASIBLE**
-The mission is feasible, delivering 3000.0 kg of payload with 13269.5 m/s available delta-v against a 9300.0 m/s requirement, yielding a 3969.5 m/s margin and a 0.0 kg shortfall against the 19920 kg maximum payload.
+Feasible as requested: 3000 kg closes.
 Request: 3000.0 kg to ISS using Falcon 9.
 
 ## Headline numbers
@@ -19,7 +19,7 @@ Request: 3000.0 kg to ISS using Falcon 9.
 | Method | Verdict correct | Mean ceiling error | Mean shortfall error | Missing fields correct | Errors |
 |---|---:|---:|---:|---:|---:|
 | full_agent | 1/1 | 0.0 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
-| llm_only | 1/1 | 1480.0 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
+| llm_only | 1/1 | 1520.0 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
 | rule_based | 1/1 | 1.3 kg (n=1) | 0.0 kg (n=1) | 0/0 | 0 |
 
 ## Burn table
@@ -35,7 +35,7 @@ For ascent rows, duration is the modeled powered-burn time. For the transfer row
 ![delta_v.png](delta_v.png)
 
 ## Recommendation
-**Recommendation:** Proceed with the launch. The mission is feasible: the requested payload of 3000.0 kg is well within the 19920 kg ceiling, the required delta-v of 9300.0 m/s is comfortably covered by the available 13269.5 m/s leaving a margin of 3969.5 m/s, and there is no propellant shortfall or payload shortfall.
+**Recommendation:** Proceed with the launch. The mission is fully feasible: the requested payload of 3000.0 kg is well within the 19920 kg capacity, the required delta-v of 9300.0 m/s is covered by the available 13269.5 m/s leaving a margin of 3969.5 m/s, and there is zero propellant shortfall at 0.0 kg and 0.0%.
 
 ## Assumptions and provenance
 - Request payload: 3,000 kg (PUBLISHED); source: 3,000 kg

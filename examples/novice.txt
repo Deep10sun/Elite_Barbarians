@@ -1,6 +1,6 @@
 # Persona: Novice — a curious student who watched a launch
 [MISSION REQUEST]
-I watched a rocket launch and got curious. Could a Falcon 9 take thirty people on a trip to the Moon? I don't know the rocket science words, and I might be imagining that the rocket just points at the Moon and flies there. Please explain what you think would happen in everyday language.
+I watched a rocket launch and got curious. Could a Falcon 9 take my house to the Moon? I know it weighs around 200,000 pounds, but I don't know the rocket science words, and I might be imagining that the rocket just points at the Moon and flies there. Please explain what you think would happen in everyday language.
 
 [PERSONA CONTEXT]
 I have no rocketry background and don't know how much we need to know about the people or their trip. Please say what you assume about the trip and what you leave out, then add a short glossary for any technical terms in the report.
